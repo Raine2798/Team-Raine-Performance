@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Raine Performance</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#f7f7f5;
+    --border:#e2e0da;
+    --text:#1f1d1a;
+    --text-muted:#5b574f;
+    --accent:#c9922a;
+    --accent-dark:#8a5f14;
+    --danger:#b3261e;
+    --danger-bg:#fbe9e7;
+    --good:#1e7d4b;
+    --good-bg:#e8f5ee;
+    --warn-bg:#fff4e0;
+    --focus:#1a73e8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    padding-bottom:64px;
+  }
+  header{
+    padding:28px 24px 20px;
+    border-bottom:1px solid var(--border);
+  }
+  header h1{
+    margin:0 0 4px;
+    font-size:1.6rem;
+    font-weight:700;
+  }
+  .subtitle{
+    color:var(--text-muted);
+    font-size:0.95rem;
+  }
+  .filter-chip{
+    display:inline-block;
+    margin-top:10px;
+    padding:4px 12px;
+    border-radius:999px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    font-size:0.82rem;
+    color:var(--text-muted);
+  }
+  .container{
+    max-width:1000px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  #copy-all{
+    position:fixed;
+    top:16px;
+    right:16px;
+    padding:8px 14px;
+    font-size:0.85rem;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    cursor:pointer;
+  }
+  #copy-all:hover{ background:#efede7; }
+  [role="tablist"]{
+    display:flex;
+    gap:4px;
+    margin:20px 0 0;
+    border-bottom:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  [role="tab"]{
+    appearance:none;
+    border:none;
+    background:none;
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--text-muted);
+    padding:10px 16px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    border-radius:6px 6px 0 0;
+  }
+  [role="tab"][aria-selected="true"]{
+    color:var(--accent-dark);
+    border-bottom-color:var(--accent);
+    background:var(--surface);
+  }
+  [role="tab"]:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  .tab-badge{
+    display:inline-block;
+    margin-left:6px;
+    padding:1px 7px;
+    border-radius:999px;
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    background:var(--warn-bg);
+    color:#7a5200;
+    vertical-align:middle;
+  }
+  [role="tabpanel"]{ padding:24px 0 40px; }
+  [role="tabpanel"][hidden]{ display:none; }
+
+  .stat-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+  }
+  .stat-tile{
+    flex:1 1 200px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    background:var(--surface);
+  }
+  .stat-tile .label{
+    font-size:0.78rem;
+    color:var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .stat-tile .value{
+    font-size:1.5rem;
+    font-weight:700;
+    margin-top:2px;
+  }
+
+  .info-btn{
+    appearance:none;
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text-muted);
+    border-radius:50%;
+    width:16px;
+    height:16px;
+    font-size:0.68rem;
+    line-height:1;
+    cursor:pointer;
+    padding:0;
+  }
+  .info-btn:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  .tooltip-pop{
+    position:relative;
+    display:inline-flex;
+  }
+  .tooltip-pop [role="tooltip"]{
+    display:none;
+    position:absolute;
+    z-index:5;
+    top:130%;
+    left:0;
+    width:280px;
+    background:#26241f;
+    color:#fdfcf9;
+    font-size:0.78rem;
+    font-weight:400;
+    line-height:1.45;
+    padding:10px 12px;
+    border-radius:8px;
+    box-shadow:0 4px 14px rgba(0,0,0,.2);
+  }
+  .tooltip-pop:hover [role="tooltip"],
+  .tooltip-pop:focus-within [role="tooltip"]{ display:block; }
+  .tooltip-pop [role="tooltip"] code{
+    display:block;
+    margin-top:6px;
+    background:rgba(255,255,255,.08);
+    padding:4px 6px;
+    border-radius:4px;
+    font-size:0.72rem;
+    white-space:pre-wrap;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.88rem;
+  }
+  caption{
+    text-align:left;
+    font-size:0.85rem;
+    color:var(--text-muted);
+    margin-bottom:8px;
+  }
+  th,td{
+    padding:8px 10px;
+    border-bottom:1px solid var(--border);
+    text-align:right;
+  }
+  th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){ text-align:left; }
+  thead th{
+    font-weight:600;
+    color:var(--text-muted);
+    font-size:0.76rem;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    white-space:nowrap;
+  }
+  tbody tr:hover{ background:var(--surface); }
+  .no-audit{ color:var(--text-muted); font-style:italic; font-size:0.82rem; }
+  .pill{
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.82rem;
+  }
+  .pill.good{ background:var(--good-bg); color:var(--good); }
+  .pill.bad{ background:var(--danger-bg); color:var(--danger); }
+  .pill.mid{ background:var(--warn-bg); color:#8a5f14; }
+
+  .caveat{
+    margin-top:22px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--surface);
+  }
+  .caveat summary{
+    cursor:pointer;
+    padding:12px 16px;
+    font-weight:600;
+    font-size:0.88rem;
+    list-style:none;
+  }
+  .caveat summary::before{
+    content:"▸ ";
+    color:var(--text-muted);
+  }
+  .caveat[open] summary::before{ content:"▾ "; }
+  .caveat .body{ padding:0 16px 16px; font-size:0.85rem; color:var(--text-muted); }
+  .caveat .body p{ margin:6px 0; }
+
+  .not-ready-panel p{ max-width:640px; }
+  .not-ready-panel .stamp{ color:var(--text-muted); font-size:0.85rem; margin-top:18px; }
+
+  footer.provenance{
+    max-width:1000px;
+    margin:40px auto 0;
+    padding:16px 24px 32px;
+    border-top:1px solid var(--border);
+    font-size:0.78rem;
+    color:var(--text-muted);
+  }
+  footer.provenance h2{
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    color:var(--text-muted);
+    margin:0 0 8px;
+  }
+  footer.provenance ul{ margin:4px 0 10px; padding-left:18px; }
+  footer.provenance li{ margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<button id="copy-all" onclick="copyAll()">Copy all</button>
+
+<header>
+  <div class="container" style="padding:0;">
+    <h1>Team Raine Performance</h1>
+    <div class="subtitle">QA · Attendance · Speed for Lorraineramos's team</div>
+    <span class="filter-chip">Team: Lorraineramos · Weeks 558–559</span>
+  </div>
+</header>
+
+<div class="container">
+  <div role="tablist" aria-label="Team Raine performance sections">
+    <button role="tab" id="tab-qa" aria-controls="panel-qa" aria-selected="true" tabindex="0">QA performance</button>
+    <button role="tab" id="tab-attendance" aria-controls="panel-attendance" aria-selected="false" tabindex="-1">Attendance<span class="tab-badge">Not ready</span></button>
+    <button role="tab" id="tab-speed" aria-controls="panel-speed" aria-selected="false" tabindex="-1">Speed performance<span class="tab-badge">Not ready</span></button>
+  </div>
+
+  <!-- QA PERFORMANCE -->
+  <section role="tabpanel" id="panel-qa" aria-labelledby="tab-qa" tabindex="0">
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="label">
+          Team avg QA score — Wk 558
+          <span class="tooltip-pop">
+            <button class="info-btn" aria-label="View definition and source for Team avg QA score">i</button>
+            <span role="tooltip">Mean of the per-agent Week 558 "EOM QA" deficit score (LTV-relative, $), across all 18 audited agents on Lorraineramos's team. $0 = satisfactory; negative = LTV lost relative to a standard agent.
+              <code>Source: QA FORM (Support's copy) &gt; QA Sheet tab &gt; Manager rollup pivot, column "558", rows where Manager = "Lorraineramos".</code>
+            </span>
+          </span>
+        </div>
+        <div class="value">-$2.15</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">
+          Team avg Binary pass rate — Wk 558
+          <span class="tooltip-pop">
+            <button class="info-btn" aria-label="View definition and source for Team avg Binary pass rate">i</button>
+            <span role="tooltip">Mean of the per-agent Week 558 binary QA pass rate (share of audited criteria marked pass).
+              <code>Source: same rollup pivot, "558" column of the Binary % block.</code>
+            </span>
+          </span>
+        </div>
+        <div class="value">46%</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Agents with a Wk 559 audit so far</div>
+        <div class="value">12 / 18</div>
+      </div>
+    </div>
+
+    <table>
+      <caption>Per-agent QA score, weeks 558–559 · Manager = Lorraineramos · Cleaner General Issues Team</caption>
+      <thead>
+        <tr>
+          <th scope="col">Agent</th>
+          <th scope="col">Tenure</th>
+          <th scope="col">
+            <span class="tooltip-pop">
+              Wk 558 score
+              <button class="info-btn" aria-label="View definition and source for Wk 558 score">i</button>
+              <span role="tooltip">Week 558 EOM QA deficit score for this agent (5 audits each). $0 = satisfactory.
+                <code>QA Sheet &gt; Manager rollup, column "558" ($), row = agent, Manager = Lorraineramos.</code>
+              </span>
+            </span>
+          </th>
+          <th scope="col">Wk 558 pass rate</th>
+          <th scope="col">Wk 559 score</th>
+          <th scope="col">Wk 559 pass rate</th>
+          <th scope="col">
+            <span class="tooltip-pop">
+              5-wk avg (555–559)
+              <button class="info-btn" aria-label="View definition and source for 5-week average score">i</button>
+              <span role="tooltip">Average EOM QA score across weeks 555–559, shown for trend context only (not filtered to 558+).
+                <code>QA Sheet &gt; Manager rollup, column "Ave Score".</code>
+              </span>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="qa-tbody"></tbody>
+    </table>
+
+    <details class="caveat">
+      <summary>Data source, limits &amp; what's not in this view</summary>
+      <div class="body">
+        <p><strong>Source:</strong> "QA FORM - August '24 (Support's copy)" Google Sheet, <em>QA Sheet</em> tab, the Manager/Agent rollup pivot (weeks 555–559), filtered to rows where Manager = "Lorraineramos". Captured as a one-time snapshot on 2026-09-17 — this page does not auto-refresh yet.</p>
+        <p><strong>Week 559 is still in progress.</strong> 6 of 18 agents show 0 audits for week 559 as of the snapshot date; their Wk 559 cells read "No audits yet" rather than a $0 or blank score, since no audit happening is a different state from a perfect audit.</p>
+        <p><strong>Parked for later:</strong> a "Common theme of markdowns" view (categorizing why QA points were deducted) was requested but is on hold — the underlying per-ticket QA Comment text lives further down the same QA Sheet tab (around row 15,000+), which the tooling used to build this page could not page into (it caps out around row ~830 on a sheet this wide). Revisit once a narrower export or a different access path is available.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ATTENDANCE (NOT READY) -->
+  <section role="tabpanel" id="panel-attendance" aria-labelledby="tab-attendance" tabindex="0" hidden>
+    <div class="not-ready-panel">
+      <p><strong>When ready, this section will show</strong> daily/weekly attendance and attendance-points for each agent on Lorraineramos's team, matching the QA and Speed sections' weekly grain.</p>
+      <p><strong>What exists vs. what doesn't:</strong> no attendance data source has been identified for this dashboard yet. This is not a display gap — the underlying data has not been located or confirmed.</p>
+      <p><strong>Blocked on:</strong> confirming which sheet or system is the live source of record for this team's attendance. Unassigned — Lorraineramos to name the source or assign someone to.</p>
+      <p><strong>Already established:</strong> none yet for this team.</p>
+      <p class="stamp">State last verified <time datetime="2026-09-17">2026-09-17</time> (confirmed with Lorraineramos in the session that built this page). Re-check when a source is proposed. If this stamp is more than a few weeks old, treat the blocker above as unconfirmed.</p>
+    </div>
+  </section>
+
+  <!-- SPEED PERFORMANCE (NOT READY) -->
+  <section role="tabpanel" id="panel-speed" aria-labelledby="tab-speed" tabindex="0" hidden>
+    <div class="not-ready-panel">
+      <p><strong>When ready, this section will show</strong> a speed/handle-time metric per agent on Lorraineramos's team for weeks 558 onward, alongside QA and Attendance.</p>
+      <p><strong>What exists vs. what doesn't:</strong> no speed/productivity data source has been identified for this dashboard yet. The QA Sheet tab used for the QA section carries no speed, idle-time, or handle-time columns.</p>
+      <p><strong>Blocked on:</strong> confirming which sheet or system is the live source of record for this team's speed metric, and the exact definition of the metric (e.g. handle time vs. idle time vs. utilization). Unassigned — Lorraineramos to name the source or assign someone to.</p>
+      <p><strong>Already established:</strong> none yet for this team.</p>
+      <p class="stamp">State last verified <time datetime="2026-09-17">2026-09-17</time> (confirmed with Lorraineramos in the session that built this page). Re-check when a source is proposed. If this stamp is more than a few weeks old, treat the blocker above as unconfirmed.</p>
+    </div>
+  </section>
+</div>
+
+<footer class="provenance">
+  <h2>How this page was made</h2>
+  <p>Skills used:</p>
+  <ul>
+    <li><code>google-drive:google-drive-api</code></li>
+    <li><code>homeaglow-knowledge:data-artifact-design</code></li>
+    <li><code>homeaglow-knowledge:create-team-artifact</code> (not-ready-section and per-metric tooltip contract; page hosted outside team-artifacts.pages.dev per this session's repo scope)</li>
+  </ul>
+  <p>Resources used:</p>
+  <ul>
+    <li>Google Sheet "QA FORM - August '24 (Support's copy)- do NOT share with CS" (fileId 1mdl194M8VIx0tYEpEOrP2MXBsfPq1AT20CWD7Sqd7wM), <em>QA Sheet</em> tab, Manager/Agent rollup pivot for weeks 555–559 — read via the Google Drive connector on 2026-09-17</li>
+    <li>Same tab's per-ticket audit log (~row 15,000+, column X "QA Comment") — not reachable with this session's export tooling; not used</li>
+  </ul>
+  <p>Written 2026-09-17.</p>
+</footer>
+
+<script>
+  const QA_ROWS = [
+    ["alyssateodosio","5+ mos",-0.30,80,null,null,-0.29],
+    ["andreagatchalian","5+ mos",-0.74,60,-1.31,60,-0.74],
+    ["andreakarlluman","1-2 mos",-2.54,40,null,null,-2.49],
+    ["billie","5+ mos",-0.30,80,null,null,-0.46],
+    ["danielramos","5+ mos",-0.20,80,null,null,-0.24],
+    ["hannahdelarama","3-4 mos",-1.62,40,-4.40,20,-1.18],
+    ["hazelilao","5+ mos",-0.79,60,null,null,-1.72],
+    ["jeffreynunez","3-4 mos",-1.67,0,-1.69,40,-1.77],
+    ["joyceesteva","5+ mos",-5.66,20,-0.73,80,-1.99],
+    ["leisabregoli","1-2 mos",-1.26,80,-1.36,20,-1.41],
+    ["leslietanchico","5+ mos",-0.30,80,-1.17,60,-0.64],
+    ["levimelanio","3-4 mos",-4.20,0,-2.11,20,-2.22],
+    ["lexquintal","1-2 mos",-3.78,40,null,null,-3.51],
+    ["loralyndevera","3-4 mos",-6.40,0,-2.11,60,-2.44],
+    ["marilyncarrasco","3-4 mos",-2.64,0,-1.60,20,-2.21],
+    ["marjoriesanchez","5+ mos",-1.85,60,-0.70,60,-0.84],
+    ["markalea","5+ mos",-0.75,60,-0.50,80,-0.53],
+    ["marlopiol","5+ mos",-3.68,40,-1.24,40,-1.56],
+  ];
+
+  function fmtScore(v){ return v === null ? null : (v>=0?"$":"-$") + Math.abs(v).toFixed(2); }
+  function pillFor(pct){
+    if (pct === null) return null;
+    const cls = pct >= 70 ? "good" : pct >= 40 ? "mid" : "bad";
+    return `<span class="pill ${cls}">${pct}%</span>`;
+  }
+
+  const tbody = document.getElementById("qa-tbody");
+  QA_ROWS.forEach(([agent,tenure,w558,b558,w559,b559,ave])=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${agent}</td>
+      <td>${tenure}</td>
+      <td>${fmtScore(w558)}</td>
+      <td>${pillFor(b558)}</td>
+      <td>${w559===null ? '<span class="no-audit">No audits yet</span>' : fmtScore(w559)}</td>
+      <td>${b559===null ? '<span class="no-audit">—</span>' : pillFor(b559)}</td>
+      <td>${fmtScore(ave)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Accessible tablist controller (roving tabindex, arrow-key navigation)
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+  function selectTab(tab){
+    tabs.forEach(t=>{
+      const selected = t === tab;
+      t.setAttribute("aria-selected", String(selected));
+      t.tabIndex = selected ? 0 : -1;
+    });
+    panels.forEach(p=>{
+      p.hidden = p.getAttribute("aria-labelledby") !== tab.id;
+    });
+    tab.focus();
+  }
+  tabs.forEach((tab, i)=>{
+    tab.addEventListener("click", ()=> selectTab(tab));
+    tab.addEventListener("keydown", (e)=>{
+      let idx = i;
+      if (e.key === "ArrowRight") idx = (i+1) % tabs.length;
+      else if (e.key === "ArrowLeft") idx = (i-1+tabs.length) % tabs.length;
+      else return;
+      e.preventDefault();
+      selectTab(tabs[idx]);
+    });
+  });
+
+  async function copyAll() {
+    const text = document.body.innerText;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    const btn = document.getElementById('copy-all');
+    const label = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => (btn.textContent = label), 1500);
+  }
+</script>
+
+</body>
+</html>
