@@ -271,7 +271,7 @@
   <div class="container" style="padding:0;">
     <h1>Team Raine Performance</h1>
     <div class="subtitle">QA · Attendance · Speed for Lorraineramos's team</div>
-    <span class="filter-chip">Team: Lorraineramos · Weeks 558–559</span>
+    <span class="filter-chip">Team: Lorraineramos · September 2026 (weeks 557–560) · showing weeks 557–559 so far</span>
   </div>
 </header>
 
@@ -287,49 +287,51 @@
     <div class="stat-row">
       <div class="stat-tile">
         <div class="label">
-          Team avg QA score — Wk 558
+          Team avg QA score — September MTD
           <span class="tooltip-pop">
             <button class="info-btn" aria-label="View definition and source for Team avg QA score">i</button>
-            <span role="tooltip">Mean of the per-agent Week 558 "EOM QA" deficit score (LTV-relative, $), across all 18 audited agents on Lorraineramos's team. $0 = satisfactory; negative = LTV lost relative to a standard agent.
-              <code>Source: QA FORM (Support's copy) &gt; QA Sheet tab &gt; Manager rollup pivot, column "558", rows where Manager = "Lorraineramos".</code>
+            <span role="tooltip">Mean "EOM QA" deficit score ($) across every logged audit in weeks 557–559 (49 audits across 19 agents so far this month). $0 = satisfactory; negative = LTV lost relative to a standard agent.
+              <code>Source: QA FORM (Support's copy) &gt; QA Sheet tab &gt; Manager rollup pivot, columns "557"/"558"/"559", rows where Manager = "Lorraineramos".</code>
             </span>
           </span>
         </div>
-        <div class="value">-$2.15</div>
+        <div class="value">-$1.68</div>
       </div>
       <div class="stat-tile">
         <div class="label">
-          Team avg Binary pass rate — Wk 558
+          Team avg Binary pass rate — September MTD
           <span class="tooltip-pop">
             <button class="info-btn" aria-label="View definition and source for Team avg Binary pass rate">i</button>
-            <span role="tooltip">Mean of the per-agent Week 558 binary QA pass rate (share of audited criteria marked pass).
-              <code>Source: same rollup pivot, "558" column of the Binary % block.</code>
+            <span role="tooltip">Mean binary QA pass rate (share of audited criteria marked pass) across every logged audit in weeks 557–559.
+              <code>Source: same rollup pivot, Binary % block, columns "557"/"558"/"559".</code>
             </span>
           </span>
         </div>
-        <div class="value">46%</div>
+        <div class="value">51%</div>
       </div>
       <div class="stat-tile">
         <div class="label">Agents with a Wk 559 audit so far</div>
-        <div class="value">12 / 18</div>
+        <div class="value">12 / 19</div>
       </div>
     </div>
 
     <table>
-      <caption>Per-agent QA score, weeks 558–559 · Manager = Lorraineramos · Cleaner General Issues Team</caption>
+      <caption>Per-agent QA score, September so far (weeks 557–559 of a 4-week month) · Manager = Lorraineramos · Cleaner General Issues Team</caption>
       <thead>
         <tr>
           <th scope="col">Agent</th>
           <th scope="col">Tenure</th>
           <th scope="col">
             <span class="tooltip-pop">
-              Wk 558 score
-              <button class="info-btn" aria-label="View definition and source for Wk 558 score">i</button>
-              <span role="tooltip">Week 558 EOM QA deficit score for this agent (5 audits each). $0 = satisfactory.
-                <code>QA Sheet &gt; Manager rollup, column "558" ($), row = agent, Manager = Lorraineramos.</code>
+              Wk 557 score
+              <button class="info-btn" aria-label="View definition and source for Wk 557 score">i</button>
+              <span role="tooltip">Week 557 EOM QA deficit score for this agent (5 audits each, unless noted). $0 = satisfactory. Week 557 is the first week of September.
+                <code>QA Sheet &gt; Manager rollup, column "557" ($), row = agent, Manager = Lorraineramos.</code>
               </span>
             </span>
           </th>
+          <th scope="col">Wk 557 pass rate</th>
+          <th scope="col">Wk 558 score</th>
           <th scope="col">Wk 558 pass rate</th>
           <th scope="col">Wk 559 score</th>
           <th scope="col">Wk 559 pass rate</th>
@@ -337,7 +339,7 @@
             <span class="tooltip-pop">
               5-wk avg (555–559)
               <button class="info-btn" aria-label="View definition and source for 5-week average score">i</button>
-              <span role="tooltip">Average EOM QA score across weeks 555–559, shown for trend context only (not filtered to 558+).
+              <span role="tooltip">Average EOM QA score across weeks 555–559, shown for trend context only — it includes late-August weeks 555–556, not just September.
                 <code>QA Sheet &gt; Manager rollup, column "Ave Score".</code>
               </span>
             </span>
@@ -350,8 +352,10 @@
     <details class="caveat">
       <summary>Data source, limits &amp; what's not in this view</summary>
       <div class="body">
-        <p><strong>Source:</strong> "QA FORM - August '24 (Support's copy)" Google Sheet, <em>QA Sheet</em> tab, the Manager/Agent rollup pivot (weeks 555–559), filtered to rows where Manager = "Lorraineramos". Captured as a one-time snapshot on 2026-09-17 — this page does not auto-refresh yet.</p>
-        <p><strong>Week 559 is still in progress.</strong> 6 of 18 agents show 0 audits for week 559 as of the snapshot date; their Wk 559 cells read "No audits yet" rather than a $0 or blank score, since no audit happening is a different state from a perfect audit.</p>
+        <p><strong>Source:</strong> "QA FORM - August '24 (Support's copy)" Google Sheet, <em>QA Sheet</em> tab, the Manager/Agent rollup pivot, filtered to rows where Manager = "Lorraineramos". Captured as a one-time snapshot on 2026-09-17 — this page does not auto-refresh yet.</p>
+        <p><strong>How "current month" is defined:</strong> per Lorraineramos, week 557 is the first week of September, and September runs 4 weeks (557–560) — except October, which she noted follows a different scheme. This page currently hardcodes September = weeks 557–560. That mapping will need to be revisited by hand (or in the refresh script, once one exists) when October's week range is confirmed — it is not derived automatically from the calendar.</p>
+        <p><strong>Week 560 hasn't posted yet.</strong> The rollup pivot in the sheet only carries columns through week 559 as of this snapshot, so September's 4th week isn't shown here — only weeks 557–559.</p>
+        <p><strong>Week 559 is still in progress.</strong> 7 of 19 agents show 0 audits for week 559 as of the snapshot date (1 of them — hazelilao — also shows 0 for week 557); those cells read "No audits yet" rather than a $0 or blank score, since no audit happening is a different state from a perfect audit.</p>
         <p><strong>Parked for later:</strong> a "Common theme of markdowns" view (categorizing why QA points were deducted) was requested but is on hold — the underlying per-ticket QA Comment text lives further down the same QA Sheet tab (around row 15,000+), which the tooling used to build this page could not page into (it caps out around row ~830 on a sheet this wide). Revisit once a narrower export or a different access path is available.</p>
       </div>
     </details>
@@ -390,7 +394,7 @@
   </ul>
   <p>Resources used:</p>
   <ul>
-    <li>Google Sheet "QA FORM - August '24 (Support's copy)- do NOT share with CS" (fileId 1mdl194M8VIx0tYEpEOrP2MXBsfPq1AT20CWD7Sqd7wM), <em>QA Sheet</em> tab, Manager/Agent rollup pivot for weeks 555–559 — read via the Google Drive connector on 2026-09-17</li>
+    <li>Google Sheet "QA FORM - August '24 (Support's copy)- do NOT share with CS" (fileId 1mdl194M8VIx0tYEpEOrP2MXBsfPq1AT20CWD7Sqd7wM), <em>QA Sheet</em> tab, Manager/Agent rollup pivot for weeks 555–559 (September 2026 = weeks 557–560 per Lorraineramos) — read via the Google Drive connector on 2026-09-17</li>
     <li>Same tab's per-ticket audit log (~row 15,000+, column X "QA Comment") — not reachable with this session's export tooling; not used</li>
   </ul>
   <p>Written 2026-09-17.</p>
@@ -398,24 +402,25 @@
 
 <script>
   const QA_ROWS = [
-    ["alyssateodosio","5+ mos",-0.30,80,null,null,-0.29],
-    ["andreagatchalian","5+ mos",-0.74,60,-1.31,60,-0.74],
-    ["andreakarlluman","1-2 mos",-2.54,40,null,null,-2.49],
-    ["billie","5+ mos",-0.30,80,null,null,-0.46],
-    ["danielramos","5+ mos",-0.20,80,null,null,-0.24],
-    ["hannahdelarama","3-4 mos",-1.62,40,-4.40,20,-1.18],
-    ["hazelilao","5+ mos",-0.79,60,null,null,-1.72],
-    ["jeffreynunez","3-4 mos",-1.67,0,-1.69,40,-1.77],
-    ["joyceesteva","5+ mos",-5.66,20,-0.73,80,-1.99],
-    ["leisabregoli","1-2 mos",-1.26,80,-1.36,20,-1.41],
-    ["leslietanchico","5+ mos",-0.30,80,-1.17,60,-0.64],
-    ["levimelanio","3-4 mos",-4.20,0,-2.11,20,-2.22],
-    ["lexquintal","1-2 mos",-3.78,40,null,null,-3.51],
-    ["loralyndevera","3-4 mos",-6.40,0,-2.11,60,-2.44],
-    ["marilyncarrasco","3-4 mos",-2.64,0,-1.60,20,-2.21],
-    ["marjoriesanchez","5+ mos",-1.85,60,-0.70,60,-0.84],
-    ["markalea","5+ mos",-0.75,60,-0.50,80,-0.53],
-    ["marlopiol","5+ mos",-3.68,40,-1.24,40,-1.56],
+    ["alyssateodosio","5+ mos", 0.00,100,-0.30,80,null,null,-0.29],
+    ["andreagatchalian","5+ mos",-1.26,80,-0.74,60,-1.31,60,-0.74],
+    ["andreakarlluman","1-2 mos",-2.41,40,-2.54,40,null,null,-2.49],
+    ["billie","5+ mos",-1.05,60,-0.30,80,null,null,-0.46],
+    ["danielramos","5+ mos",-0.45,80,-0.20,80,null,null,-0.24],
+    ["evanjienabos","1-2 mos",-0.70,80,-0.75,60,null,null,-1.85],
+    ["hannahdelarama","3-4 mos",-1.10,40,-1.62,40,-4.40,20,-1.98],
+    ["hazelilao","5+ mos",null,null,-0.79,60,null,null,-1.72],
+    ["jeffreynunez","3-4 mos",-1.72,20,-1.67,0,-1.69,40,-1.77],
+    ["joyceesteva","5+ mos",-2.40,80,-5.66,20,-0.73,80,-1.99],
+    ["leisabregoli","1-2 mos",-0.64,60,-1.26,80,-1.36,20,-1.41],
+    ["leslietanchico","5+ mos",-0.60,60,-0.30,80,-1.17,60,-0.64],
+    ["levimelanio","3-4 mos",-1.10,60,-4.20,0,-2.11,20,-2.22],
+    ["lexquintal","1-2 mos",-2.65,40,-3.78,40,null,null,-3.51],
+    ["loralyndevera","3-4 mos",-2.24,0,-6.40,0,-2.11,60,-2.44],
+    ["marilyncarrasco","3-4 mos",-4.12,0,-2.64,0,-1.60,20,-2.21],
+    ["marjoriesanchez","5+ mos", 0.00,100,-1.85,60,-0.70,60,-0.84],
+    ["markalea","5+ mos",-0.50,80,-0.75,60,-0.50,80,-0.53],
+    ["marlopiol","5+ mos",-0.99,60,-3.68,40,-1.24,40,-1.50],
   ];
 
   function fmtScore(v){ return v === null ? null : (v>=0?"$":"-$") + Math.abs(v).toFixed(2); }
@@ -426,11 +431,13 @@
   }
 
   const tbody = document.getElementById("qa-tbody");
-  QA_ROWS.forEach(([agent,tenure,w558,b558,w559,b559,ave])=>{
+  QA_ROWS.forEach(([agent,tenure,w557,b557,w558,b558,w559,b559,ave])=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${agent}</td>
       <td>${tenure}</td>
+      <td>${w557===null ? '<span class="no-audit">No audits yet</span>' : fmtScore(w557)}</td>
+      <td>${b557===null ? '<span class="no-audit">—</span>' : pillFor(b557)}</td>
       <td>${fmtScore(w558)}</td>
       <td>${pillFor(b558)}</td>
       <td>${w559===null ? '<span class="no-audit">No audits yet</span>' : fmtScore(w559)}</td>
