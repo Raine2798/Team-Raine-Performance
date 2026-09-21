@@ -478,6 +478,7 @@
         <p><strong>Sources:</strong> "HG Weekly Schedule" Google Sheet (rest days + shift hours per agent, Manager/OM = Raine) and the daily check-in thread in Slack channel <code>#team_raine_attendance-and-compliance_tracker</code>, where agents reply "Logged in" / "Logged out".</p>
         <p><strong>Late</strong> = logged in more than 5 minutes after scheduled start, on a scheduled work day. <strong>Missed</strong> = no login recorded by end of day, on a scheduled work day. <strong>Rest day</strong> = not expected to log in at all.</p>
         <p><strong>Not yet included:</strong> day-specific schedule overrides (holidays, approved one-off shift changes) from the Weekly Schedule sheet's date grid — only the recurring rest-day/shift pattern is used right now.</p>
+        <p><strong>Schedule change, 2026-09-21:</strong> levimelanio's shift moved from 5:00 AM–3:00 PM to 6:00 AM–4:00 PM CT, per Lorraineramos, effective going forward. Rest days (Thu, Fri) are unchanged. Past lateness in the reliability tracker below was computed against the old 5:00 AM start and is not revised retroactively.</p>
         <p><strong>Reliability tracker, added 2026-09-18:</strong> the cumulative table above is seeded from 9/18 only — 0 lates, 0 missed team-wide. Two corrections behind that number: lexquintal logged in on time (6:59 AM) but posted it late, and danielramos never posted at all but Lorraineramos confirmed he was on shift that day, so neither counts against them (danielramos shows as "On shift (no Slack post)" in the table above rather than a guessed time or a miss). <strong>Known gap:</strong> the daily automated check runs at 12PM CT, which is enough to confirm a <em>late</em> login is final, but not enough to confirm a <em>missed</em> shift (someone could still log in that afternoon) — so accurately tallying misses going forward needs an end-of-day check, which doesn't exist yet. Flagging to Lorraineramos: happy to add a second daily routine near shift-end to finalize each day's misses, unless she'd rather review and correct manually like today's danielramos case.</p>
       </div>
     </details>
@@ -833,7 +834,7 @@
     ["joyceesteva", ["Fri","Sat"], "7:00 AM", "5:00 PM"],
     ["leisabregoli", ["Sat","Sun"], "7:00 AM", "5:00 PM"],
     ["leslietanchico", ["Wed","Thu"], "8:00 AM", "6:00 PM"],
-    ["levimelanio", ["Thu","Fri"], "5:00 AM", "3:00 PM"],
+    ["levimelanio", ["Thu","Fri"], "6:00 AM", "4:00 PM"],
     ["lexquintal", ["Sat","Sun"], "7:00 AM", "5:00 PM"],
     ["loralyndevera", ["Fri","Sat"], "9:00 AM", "7:00 PM"],
     ["marilyncarrasco", ["Fri","Sat"], "9:00 AM", "7:00 PM"],
@@ -849,14 +850,16 @@
 
   // Populated by the daily refresh routine once the check-in thread has data.
   const ATTENDANCE_TODAY = {
-    asOf: "2026-09-19",
-    weekday: "Sat",
+    asOf: "2026-09-20",
+    weekday: "Sun",
     logins: {
-      "levimelanio": "5:51 AM",
-      "hannahdelarama": "6:58 AM",
-      "leslietanchico": "8:01 AM",
-      "billie": "8:58 AM",
-      "hazelilao": "8:59 AM"
+      "levimelanio": "4:54 AM",
+      "joyceesteva": "7:00 AM",
+      "leslietanchico": "8:29 AM",
+      "loralyndevera": "8:51 AM",
+      "rilenpelovello": "8:57 AM",
+      "jeffreynunez": "10:15 AM",
+      "rosellerobles": "10:58 AM"
     }
   };
 
@@ -866,6 +869,8 @@
   // manually confirmed on shift despite no post — neither counts against them).
   // 2026-09-19 (Sat): levimelanio logged in 51 min late (5:51 AM vs. 5:00 AM start) = 1 late.
   // Everyone else scheduled that day (billie, hannahdelarama, hazelilao, leslietanchico) was on time.
+  // 2026-09-20 (Sun): leslietanchico 29 min late, jeffreynunez 1h15m late. hannahdelarama,
+  // marilyncarrasco, rowselcapili hadn't logged in as of the noon check (not counted as missed yet).
   const ATTENDANCE_TALLY = {
     "alyssateodosio": { daysTracked: 1, lates: 0, missed: 0 },
     "andreagatchalian": { daysTracked: 1, lates: 0, missed: 0 },
@@ -873,23 +878,23 @@
     "billie": { daysTracked: 2, lates: 0, missed: 0 },
     "danielramos": { daysTracked: 1, lates: 0, missed: 0 },
     "evanjienabos": { daysTracked: 1, lates: 0, missed: 0 },
-    "hannahdelarama": { daysTracked: 1, lates: 0, missed: 0 },
+    "hannahdelarama": { daysTracked: 2, lates: 0, missed: 0 },
     "hazelilao": { daysTracked: 2, lates: 0, missed: 0 },
-    "jeffreynunez": { daysTracked: 0, lates: 0, missed: 0 },
-    "joyceesteva": { daysTracked: 0, lates: 0, missed: 0 },
+    "jeffreynunez": { daysTracked: 1, lates: 1, missed: 0 },
+    "joyceesteva": { daysTracked: 1, lates: 0, missed: 0 },
     "leisabregoli": { daysTracked: 1, lates: 0, missed: 0 },
-    "leslietanchico": { daysTracked: 2, lates: 0, missed: 0 },
-    "levimelanio": { daysTracked: 1, lates: 1, missed: 0 },
+    "leslietanchico": { daysTracked: 3, lates: 1, missed: 0 },
+    "levimelanio": { daysTracked: 2, lates: 1, missed: 0 },
     "lexquintal": { daysTracked: 1, lates: 0, missed: 0 },
-    "loralyndevera": { daysTracked: 0, lates: 0, missed: 0 },
-    "marilyncarrasco": { daysTracked: 0, lates: 0, missed: 0 },
+    "loralyndevera": { daysTracked: 1, lates: 0, missed: 0 },
+    "marilyncarrasco": { daysTracked: 1, lates: 0, missed: 0 },
     "marjoriesanchez": { daysTracked: 1, lates: 0, missed: 0 },
     "markalea": { daysTracked: 1, lates: 0, missed: 0 },
     "marlopiol": { daysTracked: 1, lates: 0, missed: 0 },
-    "rilenpelovello": { daysTracked: 0, lates: 0, missed: 0 },
-    "rosellerobles": { daysTracked: 0, lates: 0, missed: 0 },
+    "rilenpelovello": { daysTracked: 1, lates: 0, missed: 0 },
+    "rosellerobles": { daysTracked: 1, lates: 0, missed: 0 },
     "rosieltolentino": { daysTracked: 1, lates: 0, missed: 0 },
-    "rowselcapili": { daysTracked: 0, lates: 0, missed: 0 },
+    "rowselcapili": { daysTracked: 1, lates: 0, missed: 0 },
     "tessamolar": { daysTracked: 1, lates: 0, missed: 0 },
   };
 
