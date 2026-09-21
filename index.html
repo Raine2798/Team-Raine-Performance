@@ -352,10 +352,10 @@
             <th scope="col">Wk 559 score</th>
             <th scope="col">559 pass</th>
             <th scope="col">
-              <span class="tt">5-wk avg
-                <button class="info-btn" aria-label="Definition and source for 5-week average score">i</button>
-                <span role="tooltip">Average EOM QA score across weeks 555–559, for trend context — includes late-August weeks 555–556, not just September.
-                  <code>QA Sheet &gt; Manager rollup, column "Ave Score".</code>
+              <span class="tt">Sep MTD avg
+                <button class="info-btn" aria-label="Definition and source for September month-to-date average score">i</button>
+                <span role="tooltip">Mean of whichever week 557/558/559/560 scores have data so far this month (weeks with no audits yet are skipped, not counted as $0) — September only.
+                  <code>Computed from the weekly columns to the left. The sheet's own "Ave Score" column (a 5-week trailing average spanning late-August weeks 555–556) is not used here.</code>
                 </span>
               </span>
             </th>
@@ -392,7 +392,8 @@
         <p><strong>Known gap, still open:</strong> the Drive export used to auto-refresh this page does not reliably return rows for rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, or tessamolar — sometimes the row is missing entirely, sometimes it's present but a specific cell reads as blank when the sheet itself has a value. A screenshot from Lorraineramos is currently the most reliable way to catch these 5 agents' figures; the automated refresh is supposed to carry their last-known values forward when it can't see them, rather than guessing. Unassigned — flagging to Lorraineramos to decide whether to keep spot-checking by screenshot or try a different export path.</p>
         <p><strong>Retroactive change, 2026-09-20:</strong> marilyncarrasco's week-557 score improved from -$4.12 (what this page had carried since 2026-09-17) to -$3.61 in today's refresh — likely a QA dispute resolution (the source sheet has its own "QA Disputes" tab). Her 5-week average moved from -$2.21 to -$2.09 accordingly. Worth knowing: a "closed" week isn't necessarily final — a dispute can revise a past week's score after the fact, and this page will pick that up on its next refresh since it re-reads the sheet fresh each time rather than freezing prior weeks.</p>
         <p><strong>Correction, 2026-09-20:</strong> Lorraineramos caught that tessamolar's week-559 score was wrong — the page showed -$1.48 as her 5-week average with week 559 marked "No audits yet," but her real week-559 score is -$0.20 (80% pass) and her real average is -$1.23. Root cause: an earlier automated refresh, hitting the known export gap above for tessamolar, accidentally carried her old average into the week-559 score slot instead of leaving it blank — so the page displayed a fabricated-looking number in a cell it should have shown as empty. Fixed above, and rilenpelovello's week-559 pass rate (60%, previously "unverified") is now confirmed too, since it reconciles against the sheet's own 5-week average. Rosieletolentino's week-559 pass rate and rosellerobles' pass rates still don't reconcile, so those remain "unverified" rather than guessed. Team-wide stats recomputed: all 24 agents now have a week-559 audit.</p>
-        <p><strong>Tenure goals, added 2026-09-18:</strong> the top/bottom-performer reference above ranks agents by September MTD average score (weeks 557–559 only, not the 5-week trailing "Ave Score" column used elsewhere on this page), measured against the lower threshold as the passing bar — per Lorraineramos, an agent at or above the lower threshold is satisfactory or better (above satisfactory once past the higher threshold, distinctive at $0+); below it is below satisfactory. Tenure buckets in the QA goal table ("1+ Months", "2+ months", "5+ months" as given) are matched 1:1 to this page's existing tenure labels ("1-2 mos", "3-4 mos", "5+ mos") in that order — not re-derived from exact month counts. In the 3-4 mos group (5 agents total), Top 3 and Bottom 3 can overlap by one agent; that's correct for a group this small, not a bug.</p>
+        <p><strong>Correction, 2026-09-21:</strong> the per-agent table's rightmost column previously showed the sheet's own "Ave Score" — a 5-week trailing average that pulls in late-August weeks 555–556 — instead of a September-only figure. Per Lorraineramos, this page should show current-month coverage only. That column now shows "Sep MTD avg" (mean of whichever of weeks 557–560 have data so far), computed the same way as the Top/Bottom performer cards below. The weekly Slack wins announcement had the same bug and was corrected the same day, including a follow-up correction posted for that week's 5+ mos QA winner.</p>
+        <p><strong>Tenure goals, added 2026-09-18:</strong> the top/bottom-performer reference above ranks agents by September MTD average score (weeks 557–559 only — the same basis as the per-agent table's "Sep MTD avg" column, not the 5-week trailing "Ave Score" the sheet itself computes), measured against the lower threshold as the passing bar — per Lorraineramos, an agent at or above the lower threshold is satisfactory or better (above satisfactory once past the higher threshold, distinctive at $0+); below it is below satisfactory. Tenure buckets in the QA goal table ("1+ Months", "2+ months", "5+ months" as given) are matched 1:1 to this page's existing tenure labels ("1-2 mos", "3-4 mos", "5+ mos") in that order — not re-derived from exact month counts. In the 3-4 mos group (5 agents total), Top 3 and Bottom 3 can overlap by one agent; that's correct for a group this small, not a bug.</p>
         <p><strong>Tenure override, 2026-09-18:</strong> billie and hazelilao are shown as "3-4 mos" tenure on this page — per Lorraineramos, they should be goaled at the 3-4 mos QA bracket regardless of what the QA FORM sheet's own Tenure column says for them (it shows "5+ mos"). This affects both their displayed Tenure and which tenure group they're ranked in below.</p>
         <p><strong>Top 3 excludes Below satisfactory agents</strong> (per Lorraineramos, 2026-09-18) — a Below satisfactory agent never fills a Top 3 slot, so Top 3 can show fewer than 3 names, or none, rather than padding it out. As of this snapshot, that's the case for the whole 3-4 mos group: every agent in it is Below satisfactory this month, so its Top 3 is empty. Bottom 3 is unaffected and always shows the 3 lowest scorers in the group regardless of band.</p>
         <p><strong>Parked for later:</strong> a "Common theme of markdowns" view was requested but is on hold — the per-ticket QA Comment text lives further down the same tab (around row 15,000+), out of reach of the export tooling used here (it caps around row ~830 on a sheet this wide).</p>
@@ -618,8 +619,9 @@
   function pillCell(v){ return v===null ? '<span class="no-audit">—</span>' : pillFor(v); }
 
   const tbody = document.getElementById("qa-tbody");
-  QA_ROWS.forEach(([agent,tenure,w557,b557,w558,b558,w559,b559,ave])=>{
+  QA_ROWS.forEach(([agent,tenure,w557,b557,w558,b558,w559,b559])=>{
     const tr = document.createElement("tr");
+    const sepMtd = mtdAvg(w557, w558, w559);
     tr.innerHTML = `
       <td>${agent}</td>
       <td>${tenure}</td>
@@ -629,7 +631,7 @@
       <td>${pillCell(b558)}</td>
       <td>${scoreCell(w559)}</td>
       <td>${pillCell(b559)}</td>
-      <td>${fmtScore(ave)}</td>
+      <td>${fmtScore(sepMtd)}</td>
     `;
     tbody.appendChild(tr);
   });
