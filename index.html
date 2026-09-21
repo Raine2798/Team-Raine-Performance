@@ -853,16 +853,26 @@
 
   // Populated by the daily refresh routine once the check-in thread has data.
   const ATTENDANCE_TODAY = {
-    asOf: "2026-09-20",
-    weekday: "Sun",
+    asOf: "2026-09-21",
+    weekday: "Mon",
     logins: {
-      "levimelanio": "4:54 AM",
-      "joyceesteva": "7:00 AM",
-      "leslietanchico": "8:29 AM",
-      "loralyndevera": "8:51 AM",
-      "rilenpelovello": "8:57 AM",
-      "jeffreynunez": "10:15 AM",
-      "rosellerobles": "10:58 AM"
+      "levimelanio": "4:55 AM",
+      "joyceesteva": "6:58 AM",
+      "alyssateodosio": "6:58 AM",
+      "markalea": "6:59 AM",
+      "tessamolar": "6:59 AM",
+      "andreakarlluman": "6:59 AM",
+      "rosieltolentino": "6:59 AM",
+      "evanjienabos": "6:59 AM",
+      "lexquintal": "7:16 AM",
+      "leslietanchico": "8:02 AM",
+      "loralyndevera": "8:50 AM",
+      "rilenpelovello": "8:54 AM",
+      "marjoriesanchez": "8:59 AM",
+      "rowselcapili": "8:59 AM",
+      "andreagatchalian": "8:59 AM",
+      "jeffreynunez": "8:59 AM",
+      "rosellerobles": "11:00 AM"
     }
   };
 
@@ -874,31 +884,34 @@
   // Everyone else scheduled that day (billie, hannahdelarama, hazelilao, leslietanchico) was on time.
   // 2026-09-20 (Sun): leslietanchico 29 min late, jeffreynunez 1h15m late. hannahdelarama,
   // marilyncarrasco, rowselcapili hadn't logged in as of the noon check (not counted as missed yet).
+  // 2026-09-21 (Mon): lexquintal 16 min late (7:16 AM vs. 7:00 AM start) = 1 late. billie and
+  // hazelilao are on their Mon rest day. danielramos, hannahdelarama, leisabregoli, marilyncarrasco,
+  // marlopiol hadn't logged in as of the noon check (not counted as missed yet).
   const ATTENDANCE_TALLY = {
-    "alyssateodosio": { daysTracked: 1, lates: 0, missed: 0 },
-    "andreagatchalian": { daysTracked: 1, lates: 0, missed: 0 },
-    "andreakarlluman": { daysTracked: 1, lates: 0, missed: 0 },
+    "alyssateodosio": { daysTracked: 2, lates: 0, missed: 0 },
+    "andreagatchalian": { daysTracked: 2, lates: 0, missed: 0 },
+    "andreakarlluman": { daysTracked: 2, lates: 0, missed: 0 },
     "billie": { daysTracked: 2, lates: 0, missed: 0 },
-    "danielramos": { daysTracked: 1, lates: 0, missed: 0 },
-    "evanjienabos": { daysTracked: 1, lates: 0, missed: 0 },
-    "hannahdelarama": { daysTracked: 2, lates: 0, missed: 0 },
+    "danielramos": { daysTracked: 2, lates: 0, missed: 0 },
+    "evanjienabos": { daysTracked: 2, lates: 0, missed: 0 },
+    "hannahdelarama": { daysTracked: 3, lates: 0, missed: 0 },
     "hazelilao": { daysTracked: 2, lates: 0, missed: 0 },
-    "jeffreynunez": { daysTracked: 1, lates: 1, missed: 0 },
-    "joyceesteva": { daysTracked: 1, lates: 0, missed: 0 },
-    "leisabregoli": { daysTracked: 1, lates: 0, missed: 0 },
-    "leslietanchico": { daysTracked: 3, lates: 1, missed: 0 },
-    "levimelanio": { daysTracked: 2, lates: 1, missed: 0 },
-    "lexquintal": { daysTracked: 1, lates: 0, missed: 0 },
-    "loralyndevera": { daysTracked: 1, lates: 0, missed: 0 },
-    "marilyncarrasco": { daysTracked: 1, lates: 0, missed: 0 },
-    "marjoriesanchez": { daysTracked: 1, lates: 0, missed: 0 },
-    "markalea": { daysTracked: 1, lates: 0, missed: 0 },
-    "marlopiol": { daysTracked: 1, lates: 0, missed: 0 },
-    "rilenpelovello": { daysTracked: 1, lates: 0, missed: 0 },
-    "rosellerobles": { daysTracked: 1, lates: 0, missed: 0 },
-    "rosieltolentino": { daysTracked: 1, lates: 0, missed: 0 },
-    "rowselcapili": { daysTracked: 1, lates: 0, missed: 0 },
-    "tessamolar": { daysTracked: 1, lates: 0, missed: 0 },
+    "jeffreynunez": { daysTracked: 2, lates: 1, missed: 0 },
+    "joyceesteva": { daysTracked: 2, lates: 0, missed: 0 },
+    "leisabregoli": { daysTracked: 2, lates: 0, missed: 0 },
+    "leslietanchico": { daysTracked: 4, lates: 1, missed: 0 },
+    "levimelanio": { daysTracked: 3, lates: 1, missed: 0 },
+    "lexquintal": { daysTracked: 2, lates: 1, missed: 0 },
+    "loralyndevera": { daysTracked: 2, lates: 0, missed: 0 },
+    "marilyncarrasco": { daysTracked: 2, lates: 0, missed: 0 },
+    "marjoriesanchez": { daysTracked: 2, lates: 0, missed: 0 },
+    "markalea": { daysTracked: 2, lates: 0, missed: 0 },
+    "marlopiol": { daysTracked: 2, lates: 0, missed: 0 },
+    "rilenpelovello": { daysTracked: 2, lates: 0, missed: 0 },
+    "rosellerobles": { daysTracked: 2, lates: 0, missed: 0 },
+    "rosieltolentino": { daysTracked: 2, lates: 0, missed: 0 },
+    "rowselcapili": { daysTracked: 2, lates: 0, missed: 0 },
+    "tessamolar": { daysTracked: 2, lates: 0, missed: 0 },
   };
 
   const attTbody = document.getElementById("att-tbody");
