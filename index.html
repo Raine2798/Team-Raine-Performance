@@ -552,7 +552,7 @@
         <p><strong>Metric used:</strong> each agent's own "SPEED RATING" — the sheet's rolling month-to-date average — rather than a per-week 557/558/559 breakdown. The per-week EOW figures aren't reliably extractable for all 24 agents from the automated read yet (the same 9 agents affected by the roster gap above), and week 558 specifically reads 0.00 for every agent in the source because 9/12–9/13 have no ticket time logged at all — not a real result, a source-data gap. Once both are resolved this page can add a weekly view.</p>
         <p><strong>Goal exception:</strong> billie and hazelilao carry a Speed goal of 17.00 in the source sheet — the same figure as a brand-new (1-2 mos) agent — even though they're now treated as 3-4 mos tenure on this page (see the QA tab's tenure-override note). This is shown as-is from the sheet rather than overridden to 13.00, since Lorraineramos hasn't said to change it; flag if that's wrong.</p>
         <p><strong>Direction is inverted from QA:</strong> for Speed, lower is better, so "passing" means at or <em>below</em> the goal number, not above it.</p>
-        <p><strong>Refreshed 2026-09-21:</strong> Lorraineramos updated the running-month speed figures in the source sheet; 15 of 24 agents' running speed picked up fresh values on this refresh (alyssateodosio, andreagatchalian, billie, danielramos, hannahdelarama, hazelilao, jeffreynunez, joyceesteva, leslietanchico, levimelanio, loralyndevera, marilyncarrasco, marjoriesanchez, markalea, marlopiol). The remaining 9 (andreakarlluman, evanjienabos, leisabregoli, lexquintal, rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, tessamolar) hit the known export gap below and still show their last-known figures from 2026-09-18 — unconfirmed whether her update changed those too.</p>
+        <p><strong>Refreshed 2026-09-21:</strong> Lorraineramos updated the running-month speed figures in the source sheet. The automated Drive-export pull only returned fresh values for 15 of 24 agents; Lorraineramos then sent a screenshot of the full CRM NAME/GOAL/SPEED RATING range (rows 6–29, all 24 agents), which confirmed all 15 auto-pulled figures were correct and supplied the other 9 (andreakarlluman, evanjienabos, leisabregoli, lexquintal, rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, tessamolar) that the export tool still can't reliably return — same known gap as the QA tab. All 24 are now current as of her screenshot.</p>
         <p class="stamp">State last verified <time datetime="2026-09-21">2026-09-21</time>.</p>
       </div>
     </details>
@@ -730,13 +730,13 @@
     ["marjoriesanchez","5+ mos",11.00,10.59],
     ["markalea","5+ mos",11.00,11.94],
     ["marlopiol","5+ mos",11.00,15.07],
-    ["rilenpelovello","1-2 mos",17.00,17.14],
-    ["rosellerobles","5+ mos",11.00,12.81],
-    ["rosieletolentino","1-2 mos",17.00,9.30],
-    ["rowselcapili","1-2 mos",17.00,9.99],
-    ["tessamolar","1-2 mos",17.00,17.93],
-    ["andreakarlluman","1-2 mos",17.00,15.10],
-    ["evanjienabos","1-2 mos",17.00,22.05],
+    ["rilenpelovello","1-2 mos",17.00,16.98],
+    ["rosellerobles","5+ mos",11.00,12.79],
+    ["rosieletolentino","1-2 mos",17.00,9.28],
+    ["rowselcapili","1-2 mos",17.00,10.27],
+    ["tessamolar","1-2 mos",17.00,17.61],
+    ["andreakarlluman","1-2 mos",17.00,15.26],
+    ["evanjienabos","1-2 mos",17.00,21.07],
   ];
   const SPEED_ABOVE_SAT_AT = 10.00; // higher threshold, all tiers
   const SPEED_DISTINCTIVE_AT = 9.00; // distinctive, all tiers
