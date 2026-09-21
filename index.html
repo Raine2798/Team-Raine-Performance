@@ -552,7 +552,8 @@
         <p><strong>Metric used:</strong> each agent's own "SPEED RATING" — the sheet's rolling month-to-date average — rather than a per-week 557/558/559 breakdown. The per-week EOW figures aren't reliably extractable for all 24 agents from the automated read yet (the same 9 agents affected by the roster gap above), and week 558 specifically reads 0.00 for every agent in the source because 9/12–9/13 have no ticket time logged at all — not a real result, a source-data gap. Once both are resolved this page can add a weekly view.</p>
         <p><strong>Goal exception:</strong> billie and hazelilao carry a Speed goal of 17.00 in the source sheet — the same figure as a brand-new (1-2 mos) agent — even though they're now treated as 3-4 mos tenure on this page (see the QA tab's tenure-override note). This is shown as-is from the sheet rather than overridden to 13.00, since Lorraineramos hasn't said to change it; flag if that's wrong.</p>
         <p><strong>Direction is inverted from QA:</strong> for Speed, lower is better, so "passing" means at or <em>below</em> the goal number, not above it.</p>
-        <p class="stamp">State last verified <time datetime="2026-09-18">2026-09-18</time>.</p>
+        <p><strong>Refreshed 2026-09-21:</strong> Lorraineramos updated the running-month speed figures in the source sheet; 15 of 24 agents' running speed picked up fresh values on this refresh (alyssateodosio, andreagatchalian, billie, danielramos, hannahdelarama, hazelilao, jeffreynunez, joyceesteva, leslietanchico, levimelanio, loralyndevera, marilyncarrasco, marjoriesanchez, markalea, marlopiol). The remaining 9 (andreakarlluman, evanjienabos, leisabregoli, lexquintal, rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, tessamolar) hit the known export gap below and still show their last-known figures from 2026-09-18 — unconfirmed whether her update changed those too.</p>
+        <p class="stamp">State last verified <time datetime="2026-09-21">2026-09-21</time>.</p>
       </div>
     </details>
   </section>
@@ -712,23 +713,23 @@
   // Source: "Team Raine - QA and Daily Speed Metrics" Google Sheet, Sept 2026 tab, read 2026-09-18.
   // [agent, tenure, goal, runningMonthSpeed] — tenure matches the (corrected) QA tenure buckets.
   const SPEED_ROWS = [
-    ["alyssateodosio","5+ mos",11.00,11.55],
-    ["andreagatchalian","5+ mos",11.00,10.09],
-    ["billie","3-4 mos",17.00,11.02],
-    ["danielramos","5+ mos",11.00,13.16],
-    ["hannahdelarama","3-4 mos",13.00,12.56],
-    ["hazelilao","3-4 mos",17.00,11.39],
-    ["jeffreynunez","3-4 mos",13.00,11.43],
-    ["joyceesteva","5+ mos",11.00,16.57],
+    ["alyssateodosio","5+ mos",11.00,11.43],
+    ["andreagatchalian","5+ mos",11.00,10.17],
+    ["billie","3-4 mos",17.00,11.66],
+    ["danielramos","5+ mos",11.00,13.47],
+    ["hannahdelarama","3-4 mos",13.00,12.70],
+    ["hazelilao","3-4 mos",17.00,11.47],
+    ["jeffreynunez","3-4 mos",13.00,11.52],
+    ["joyceesteva","5+ mos",11.00,16.50],
     ["leisabregoli","1-2 mos",17.00,17.41],
-    ["leslietanchico","5+ mos",11.00,9.73],
-    ["levimelanio","3-4 mos",13.00,12.35],
+    ["leslietanchico","5+ mos",11.00,10.33],
+    ["levimelanio","3-4 mos",13.00,12.73],
     ["lexquintal","1-2 mos",17.00,12.55],
-    ["loralyndevera","3-4 mos",13.00,10.69],
-    ["marilyncarrasco","3-4 mos",13.00,15.23],
-    ["marjoriesanchez","5+ mos",11.00,10.37],
-    ["markalea","5+ mos",11.00,11.20],
-    ["marlopiol","5+ mos",11.00,15.35],
+    ["loralyndevera","3-4 mos",13.00,10.87],
+    ["marilyncarrasco","3-4 mos",13.00,15.66],
+    ["marjoriesanchez","5+ mos",11.00,10.59],
+    ["markalea","5+ mos",11.00,11.94],
+    ["marlopiol","5+ mos",11.00,15.07],
     ["rilenpelovello","1-2 mos",17.00,17.14],
     ["rosellerobles","5+ mos",11.00,12.81],
     ["rosieletolentino","1-2 mos",17.00,9.30],
