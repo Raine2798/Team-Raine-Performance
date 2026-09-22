@@ -291,7 +291,7 @@
     <div>
       <h1>Team Raine Performance</h1>
       <div class="subtitle">QA · Attendance · Speed for Lorraineramos's team</div>
-      <span class="chip">Lorraineramos · QA: Sep 2026 wk 557–560, refreshed 2026-09-20 · Attendance: live from 2026-09-18 · Speed: added 2026-09-18</span>
+      <span class="chip">Lorraineramos · QA: Sep 2026 wk 557–560, refreshed 2026-09-22 · Attendance: live from 2026-09-18 · Speed: added 2026-09-18</span>
     </div>
     <button id="copy-all" onclick="copyAll()">Copy all</button>
   </div>
@@ -309,31 +309,31 @@
         <div class="label tt">
           Team avg QA score — Sep MTD
           <button class="info-btn" aria-label="Definition and source for team avg QA score">i</button>
-          <span role="tooltip">Mean "EOM QA" deficit score ($) across every logged audit in weeks 557–559 (71 audits, 24 agents). $0 = satisfactory; negative = LTV lost relative to a standard agent.
-            <code>QA FORM &gt; QA Sheet tab &gt; Manager rollup, cols 557/558/559, Manager = Lorraineramos.</code>
+          <span role="tooltip">Mean "EOM QA" deficit score ($) across every logged audit in weeks 557–560 (73 audits, 24 agents). $0 = satisfactory; negative = LTV lost relative to a standard agent.
+            <code>QA FORM &gt; QA Sheet tab &gt; Manager rollup, cols 557/558/559/560, Manager = Lorraineramos.</code>
           </span>
         </div>
-        <div class="value">-$1.56</div>
+        <div class="value">-$1.53</div>
       </div>
       <div class="stat-tile">
         <div class="label tt">
           Team avg pass rate — Sep MTD
           <button class="info-btn" aria-label="Definition and source for team avg binary pass rate">i</button>
-          <span role="tooltip">Mean binary QA pass rate (share of audited criteria marked pass) across every logged audit in weeks 557–559.
-            <code>Same rollup, Binary % block, cols 557/558/559.</code>
+          <span role="tooltip">Mean binary QA pass rate (share of audited criteria marked pass) across every logged audit in weeks 557–560.
+            <code>Same rollup, Binary % block, cols 557/558/559/560.</code>
           </span>
         </div>
         <div class="value">54%</div>
       </div>
       <div class="stat-tile">
-        <div class="label">Agents with a Wk 559 audit so far</div>
-        <div class="value">24 / 24</div>
+        <div class="label">Agents with a Wk 560 audit so far</div>
+        <div class="value">2 / 24</div>
       </div>
     </div>
 
     <div class="table-scroll">
       <table>
-        <caption>Per-agent QA score, September so far (weeks 557–559 of a 4-week month) · Manager = Lorraineramos</caption>
+        <caption>Per-agent QA score, September so far (weeks 557–560 of a 4-week month) · Manager = Lorraineramos</caption>
         <thead>
           <tr>
             <th scope="col">Agent</th>
@@ -351,6 +351,15 @@
             <th scope="col">558 pass</th>
             <th scope="col">Wk 559 score</th>
             <th scope="col">559 pass</th>
+            <th scope="col">
+              <span class="tt">Wk 560 score
+                <button class="info-btn" aria-label="Definition and source for week 560 score">i</button>
+                <span role="tooltip">Week 560 EOM QA deficit score (5 audits, unless noted). Week 560 is the fourth/last week of September, and just started posting.
+                  <code>QA Sheet &gt; Manager rollup, col "560" ($).</code>
+                </span>
+              </span>
+            </th>
+            <th scope="col">560 pass</th>
             <th scope="col">
               <span class="tt">Sep MTD avg
                 <button class="info-btn" aria-label="Definition and source for September month-to-date average score">i</button>
@@ -383,17 +392,18 @@
     <details class="caveat">
       <summary>Data source, limits &amp; what's not in this view</summary>
       <div class="body">
-        <p><strong>Source:</strong> "QA FORM - August '24 (Support's copy)" Google Sheet, <em>QA Sheet</em> tab, Manager/Agent rollup pivot, filtered to Manager = "Lorraineramos". First captured 2026-09-17; refreshed 2026-09-20. A daily routine re-pulls this each morning (~9AM CT) — so on any given day, figures can lag same-day sheet edits until the next run.</p>
+        <p><strong>Source:</strong> "QA FORM - August '24 (Support's copy)" Google Sheet, <em>QA Sheet</em> tab, Manager/Agent rollup pivot, filtered to Manager = "Lorraineramos". First captured 2026-09-17; refreshed 2026-09-22. A daily routine re-pulls this each morning (~9AM CT) — so on any given day, figures can lag same-day sheet edits until the next run.</p>
         <p><strong>How "current month" is defined:</strong> per Lorraineramos, week 557 is the first week of September, and September runs 4 weeks (557–560) — October follows a different scheme per her note. This hardcodes September = weeks 557–560; revisit by hand once October's range is confirmed.</p>
-        <p><strong>Week 560 hasn't posted yet.</strong> The rollup pivot only carries columns through week 559 as of this snapshot, so September's 4th week isn't shown — only 557–559.</p>
-        <p><strong>Week 559 is now complete for all 24 agents</strong> (as of the correction below) — hazelilao still shows 0 audits for week 557, which reads as "No audits yet" rather than $0, since no audit happening is a different state from a perfect one.</p>
+        <p><strong>Week 560 started posting 2026-09-22.</strong> As of this snapshot only 2 of 24 agents (hannahdelarama, leslietanchico) have a week-560 audit yet — everyone else reads "No audits yet" for that week rather than $0, since it's genuinely too early for most of the team, not a missing-data problem.</p>
+        <p><strong>Week 559 is complete for all 24 agents</strong> — hazelilao still shows 0 audits for week 557, which reads as "No audits yet" rather than $0, since no audit happening is a different state from a perfect one.</p>
+        <p><strong>Retroactive change, 2026-09-22:</strong> joyceesteva's week-557 score improved from -$2.40 (carried since 2026-09-17) to -$0.47 in today's refresh — her binary pass rate for that week stayed at 80%, only the dollar score moved, consistent with a QA dispute resolution rather than a tooling error (same pattern as marilyncarrasco's week-557 revision on 2026-09-20). Her September MTD average moved accordingly.</p>
         <p><strong>Correction, 2026-09-17:</strong> this page originally showed only 19 of the 24 agents on Lorraineramos's roster — the first read of the QA Sheet's rollup table got silently truncated and dropped its last 5 rows (rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, tessamolar). All 5 have been added; team-wide stats above are recomputed accordingly.</p>
         <p><strong>Correction, 2026-09-18:</strong> rilenpelovello and rosieletolentino's week-559 scores were showing as "no audit yet" but Lorraineramos confirmed via screenshot they actually have week-559 scores of -$3.04 and -$0.65 — corrected above. Their week-559 <em>pass rate</em> (and rosellerobles' pass rates for all three weeks) still couldn't be confirmed from the automated pull, so those cells are shown as unverified rather than guessed; the $ scores for all of rilenpelovello, rosellerobles, rowselcapili are confirmed against her screenshot.</p>
-        <p><strong>Known gap, still open:</strong> the Drive export used to auto-refresh this page does not reliably return rows for rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, or tessamolar — sometimes the row is missing entirely, sometimes it's present but a specific cell reads as blank when the sheet itself has a value. A screenshot from Lorraineramos is currently the most reliable way to catch these 5 agents' figures; the automated refresh is supposed to carry their last-known values forward when it can't see them, rather than guessing. Unassigned — flagging to Lorraineramos to decide whether to keep spot-checking by screenshot or try a different export path.</p>
+        <p><strong>Known gap, still open:</strong> the Drive export used to auto-refresh this page does not reliably return rows for rilenpelovello, rosellerobles, rosieletolentino, rowselcapili, or tessamolar — sometimes the row is missing entirely, sometimes it's present but a specific cell reads as blank when the sheet itself has a value. A screenshot from Lorraineramos is currently the most reliable way to catch these 5 agents' figures; the automated refresh is supposed to carry their last-known values forward when it can't see them, rather than guessing. This also means their week-560 column reads "No audits yet" by default rather than a carried-forward guess — there's no prior week-560 value to carry forward, so it's shown as unknown rather than assumed zero. Unassigned — flagging to Lorraineramos to decide whether to keep spot-checking by screenshot or try a different export path.</p>
         <p><strong>Retroactive change, 2026-09-20:</strong> marilyncarrasco's week-557 score improved from -$4.12 (what this page had carried since 2026-09-17) to -$3.61 in today's refresh — likely a QA dispute resolution (the source sheet has its own "QA Disputes" tab). Her 5-week average moved from -$2.21 to -$2.09 accordingly. Worth knowing: a "closed" week isn't necessarily final — a dispute can revise a past week's score after the fact, and this page will pick that up on its next refresh since it re-reads the sheet fresh each time rather than freezing prior weeks.</p>
         <p><strong>Correction, 2026-09-20:</strong> Lorraineramos caught that tessamolar's week-559 score was wrong — the page showed -$1.48 as her 5-week average with week 559 marked "No audits yet," but her real week-559 score is -$0.20 (80% pass) and her real average is -$1.23. Root cause: an earlier automated refresh, hitting the known export gap above for tessamolar, accidentally carried her old average into the week-559 score slot instead of leaving it blank — so the page displayed a fabricated-looking number in a cell it should have shown as empty. Fixed above, and rilenpelovello's week-559 pass rate (60%, previously "unverified") is now confirmed too, since it reconciles against the sheet's own 5-week average. Rosieletolentino's week-559 pass rate and rosellerobles' pass rates still don't reconcile, so those remain "unverified" rather than guessed. Team-wide stats recomputed: all 24 agents now have a week-559 audit.</p>
         <p><strong>Correction, 2026-09-21:</strong> the per-agent table's rightmost column previously showed the sheet's own "Ave Score" — a 5-week trailing average that pulls in late-August weeks 555–556 — instead of a September-only figure. Per Lorraineramos, this page should show current-month coverage only. That column now shows "Sep MTD avg" (mean of whichever of weeks 557–560 have data so far), computed the same way as the Top/Bottom performer cards below. The weekly Slack wins announcement had the same bug and was corrected the same day, including a follow-up correction posted for that week's 5+ mos QA winner.</p>
-        <p><strong>Tenure goals, added 2026-09-18:</strong> the top/bottom-performer reference above ranks agents by September MTD average score (weeks 557–559 only — the same basis as the per-agent table's "Sep MTD avg" column, not the 5-week trailing "Ave Score" the sheet itself computes), measured against the lower threshold as the passing bar — per Lorraineramos, an agent at or above the lower threshold is satisfactory or better (above satisfactory once past the higher threshold, distinctive at $0+); below it is below satisfactory. Tenure buckets in the QA goal table ("1+ Months", "2+ months", "5+ months" as given) are matched 1:1 to this page's existing tenure labels ("1-2 mos", "3-4 mos", "5+ mos") in that order — not re-derived from exact month counts. In the 3-4 mos group (5 agents total), Top 3 and Bottom 3 can overlap by one agent; that's correct for a group this small, not a bug.</p>
+        <p><strong>Tenure goals, added 2026-09-18:</strong> the top/bottom-performer reference above ranks agents by September MTD average score (weeks 557–560, whichever have data — the same basis as the per-agent table's "Sep MTD avg" column, not the 5-week trailing "Ave Score" the sheet itself computes), measured against the lower threshold as the passing bar — per Lorraineramos, an agent at or above the lower threshold is satisfactory or better (above satisfactory once past the higher threshold, distinctive at $0+); below it is below satisfactory. Tenure buckets in the QA goal table ("1+ Months", "2+ months", "5+ months" as given) are matched 1:1 to this page's existing tenure labels ("1-2 mos", "3-4 mos", "5+ mos") in that order — not re-derived from exact month counts. In the 3-4 mos group (5 agents total), Top 3 and Bottom 3 can overlap by one agent; that's correct for a group this small, not a bug.</p>
         <p><strong>Tenure override, 2026-09-18:</strong> billie and hazelilao are shown as "3-4 mos" tenure on this page — per Lorraineramos, they should be goaled at the 3-4 mos QA bracket regardless of what the QA FORM sheet's own Tenure column says for them (it shows "5+ mos"). This affects both their displayed Tenure and which tenure group they're ranked in below.</p>
         <p><strong>Top 3 excludes Below satisfactory agents</strong> (per Lorraineramos, 2026-09-18) — a Below satisfactory agent never fills a Top 3 slot, so Top 3 can show fewer than 3 names, or none, rather than padding it out. As of this snapshot, that's the case for the whole 3-4 mos group: every agent in it is Below satisfactory this month, so its Top 3 is empty. Bottom 3 is unaffected and always shows the 3 lowest scorers in the group regardless of band.</p>
         <p><strong>Parked for later:</strong> a "Common theme of markdowns" view was requested but is on hold — the per-ticket QA Comment text lives further down the same tab (around row 15,000+), out of reach of the export tooling used here (it caps around row ~830 on a sheet this wide).</p>
@@ -570,7 +580,7 @@
     </ul>
     <p>Resources used:</p>
     <ul>
-      <li>Google Sheet "QA FORM - August '24 (Support's copy)- do NOT share with CS" (fileId 1mdl194M8VIx0tYEpEOrP2MXBsfPq1AT20CWD7Sqd7wM), <em>QA Sheet</em> tab, Manager/Agent rollup pivot, weeks 555–559 — read via the Google Drive connector on 2026-09-17, refreshed daily through 2026-09-20</li>
+      <li>Google Sheet "QA FORM - August '24 (Support's copy)- do NOT share with CS" (fileId 1mdl194M8VIx0tYEpEOrP2MXBsfPq1AT20CWD7Sqd7wM), <em>QA Sheet</em> tab, Manager/Agent rollup pivot, weeks 556–560 — read via the Google Drive connector on 2026-09-17, refreshed daily through 2026-09-22</li>
       <li>Same tab's per-ticket audit log (~row 15,000+, column X "QA Comment") — not reachable with available export tooling; not used</li>
       <li>Google Sheet "HG Weekly Schedule" (fileId 15L91Z31nAx154qJ7KTB7XSwYFG1A14Mejuzv2xZaZzQ), Manager/OM = Raine roster — RD and Schedule columns confirmed by Lorraineramos via screenshot on 2026-09-17 (the export tool couldn't reliably target the specific tab)</li>
       <li>Slack channel #team_raine_attendance-and-compliance_tracker (C0BAF9DF135) — read via the Slack connector on 2026-09-17; daily check-in thread not yet active as of this snapshot</li>
@@ -581,31 +591,32 @@
 </div>
 
 <script>
+  // [agent, tenure, w557,b557, w558,b558, w559,b559, w560,b560]
   const QA_ROWS = [
-    ["alyssateodosio","5+ mos", 0.00,100,-0.30,80,0.00,100,-0.23],
-    ["andreagatchalian","5+ mos",-1.26,80,-0.74,60,-1.31,60,-0.74],
-    ["andreakarlluman","1-2 mos",-2.41,40,-2.54,40,-4.64,40,-2.92],
-    ["billie","3-4 mos",-1.05,60,-0.30,80,-1.20,40,-0.61],
-    ["danielramos","5+ mos",-0.45,80,-0.20,80,0.00,100,-0.19],
-    ["evanjienabos","1-2 mos",-0.70,80,-0.75,60,-2.09,20,-1.90],
-    ["hannahdelarama","3-4 mos",-1.10,40,-1.62,40,-4.40,20,-1.98],
-    ["hazelilao","3-4 mos",null,null,-0.79,60,-1.93,40,-1.77],
-    ["jeffreynunez","3-4 mos",-1.72,20,-1.67,0,-1.69,40,-1.77],
-    ["joyceesteva","5+ mos",-2.40,80,-5.66,20,-0.73,80,-1.99],
-    ["leisabregoli","1-2 mos",-0.64,60,-1.26,80,-1.36,20,-1.41],
-    ["leslietanchico","5+ mos",-0.60,60,-0.30,80,-1.17,60,-0.64],
-    ["levimelanio","3-4 mos",-1.10,60,-4.20,0,-2.11,20,-2.22],
-    ["lexquintal","1-2 mos",-2.65,40,-3.78,40,-2.45,60,-3.30],
-    ["loralyndevera","3-4 mos",-2.24,0,-6.40,0,-2.11,60,-2.44],
-    ["marilyncarrasco","3-4 mos",-3.61,0,-2.64,0,-1.60,20,-2.09],
-    ["marjoriesanchez","5+ mos", 0.00,100,-1.85,60,-0.70,60,-0.84],
-    ["markalea","5+ mos",-0.50,80,-0.75,60,-0.50,80,-0.53],
-    ["marlopiol","5+ mos",-0.99,60,-3.68,40,-1.24,40,-1.50],
-    ["rilenpelovello","1-2 mos",0.00,100,-0.60,60,-3.04,60,-1.83],
-    ["rosellerobles","5+ mos",-1.35,"unverified",-2.03,"unverified",-1.91,"unverified",-1.32],
-    ["rosieletolentino","1-2 mos",-0.20,80,0.00,100,-0.65,"unverified",-0.72],
-    ["rowselcapili","1-2 mos",-1.52,60,-1.10,60,-0.90,60,-0.98],
-    ["tessamolar","1-2 mos",-2.46,20,-0.81,80,-0.20,80,-1.23],
+    ["alyssateodosio","5+ mos", 0.00,100,-0.30,80,0.00,100,null,null],
+    ["andreagatchalian","5+ mos",-1.26,80,-0.74,60,-1.31,60,null,null],
+    ["andreakarlluman","1-2 mos",-2.41,40,-2.54,40,-4.64,40,null,null],
+    ["billie","3-4 mos",-1.05,60,-0.30,80,-1.20,40,null,null],
+    ["danielramos","5+ mos",-0.45,80,-0.20,80,0.00,100,null,null],
+    ["evanjienabos","1-2 mos",-0.70,80,-0.75,60,-2.09,20,null,null],
+    ["hannahdelarama","3-4 mos",-1.10,40,-1.62,40,-4.40,20,-1.32,40],
+    ["hazelilao","3-4 mos",null,null,-0.79,60,-1.93,40,null,null],
+    ["jeffreynunez","3-4 mos",-1.72,20,-1.67,0,-1.69,40,null,null],
+    ["joyceesteva","5+ mos",-0.47,80,-5.66,20,-0.73,80,null,null],
+    ["leisabregoli","1-2 mos",-0.64,60,-1.26,80,-1.36,20,null,null],
+    ["leslietanchico","5+ mos",-0.60,60,-0.30,80,-1.17,60,-1.46,60],
+    ["levimelanio","3-4 mos",-1.10,60,-4.20,0,-2.11,20,null,null],
+    ["lexquintal","1-2 mos",-2.65,40,-3.78,40,-2.45,60,null,null],
+    ["loralyndevera","3-4 mos",-2.24,0,-6.40,0,-2.11,60,null,null],
+    ["marilyncarrasco","3-4 mos",-3.61,0,-2.64,0,-1.60,20,null,null],
+    ["marjoriesanchez","5+ mos", 0.00,100,-1.85,60,-0.70,60,null,null],
+    ["markalea","5+ mos",-0.50,80,-0.75,60,-0.50,80,null,null],
+    ["marlopiol","5+ mos",-0.99,60,-3.68,40,-1.24,40,null,null],
+    ["rilenpelovello","1-2 mos",0.00,100,-0.60,60,-3.04,60,null,null],
+    ["rosellerobles","5+ mos",-1.35,"unverified",-2.03,"unverified",-1.91,"unverified",null,null],
+    ["rosieletolentino","1-2 mos",-0.20,80,0.00,100,-0.65,"unverified",null,null],
+    ["rowselcapili","1-2 mos",-1.52,60,-1.10,60,-0.90,60,null,null],
+    ["tessamolar","1-2 mos",-2.46,20,-0.81,80,-0.20,80,null,null],
   ];
 
   function fmtScore(v){ return v === null ? null : (v>=0?"$":"-$") + Math.abs(v).toFixed(2); }
@@ -619,9 +630,9 @@
   function pillCell(v){ return v===null ? '<span class="no-audit">—</span>' : pillFor(v); }
 
   const tbody = document.getElementById("qa-tbody");
-  QA_ROWS.forEach(([agent,tenure,w557,b557,w558,b558,w559,b559])=>{
+  QA_ROWS.forEach(([agent,tenure,w557,b557,w558,b558,w559,b559,w560,b560])=>{
     const tr = document.createElement("tr");
-    const sepMtd = mtdAvg(w557, w558, w559);
+    const sepMtd = mtdAvg(w557, w558, w559, w560);
     tr.innerHTML = `
       <td>${agent}</td>
       <td>${tenure}</td>
@@ -631,6 +642,8 @@
       <td>${pillCell(b558)}</td>
       <td>${scoreCell(w559)}</td>
       <td>${pillCell(b559)}</td>
+      <td>${scoreCell(w560)}</td>
+      <td>${pillCell(b560)}</td>
       <td>${fmtScore(sepMtd)}</td>
     `;
     tbody.appendChild(tr);
@@ -644,8 +657,8 @@
     ["5+ mos",  -0.90, -0.20, 0.00],
   ];
 
-  function mtdAvg(w557, w558, w559){
-    const vals = [w557, w558, w559].filter(v => v !== null && v !== undefined);
+  function mtdAvg(w557, w558, w559, w560){
+    const vals = [w557, w558, w559, w560].filter(v => v !== null && v !== undefined);
     if (!vals.length) return null;
     return vals.reduce((a,b)=>a+b, 0) / vals.length;
   }
@@ -678,7 +691,7 @@
   TENURE_GOALS.forEach(([tenure, lower, higher, distinctive])=>{
     const members = QA_ROWS
       .filter(r => r[1] === tenure)
-      .map(([agent, , w557, , w558, , w559]) => ({ agent, mtd: mtdAvg(w557, w558, w559) }))
+      .map(([agent, , w557, , w558, , w559, , w560]) => ({ agent, mtd: mtdAvg(w557, w558, w559, w560) }))
       .filter(r => r.mtd !== null)
       // Ranked by margin vs. the passing bar (lower threshold) — a constant offset per
       // tenure group, so this sorts the same as raw score, worded to match how the goal reads.
