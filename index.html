@@ -291,7 +291,7 @@
     <div>
       <h1>Team Raine Performance</h1>
       <div class="subtitle">QA · Attendance · Speed for Lorraineramos's team</div>
-      <span class="chip">Lorraineramos · QA: Sep 2026 wk 557–560, refreshed 2026-09-22 · Attendance: live from 2026-09-18 · Speed: added 2026-09-18</span>
+      <span class="chip">Lorraineramos · QA: Sep 2026 wk 557–560, refreshed 2026-09-22 · Attendance: live from 2026-09-18 · Speed: added 2026-09-18 · PIP: tab added 2026-09-22</span>
     </div>
     <button id="copy-all" onclick="copyAll()">Copy all</button>
   </div>
@@ -300,6 +300,7 @@
     <button role="tab" id="tab-qa" aria-controls="panel-qa" aria-selected="true" tabindex="0">QA performance</button>
     <button role="tab" id="tab-attendance" aria-controls="panel-attendance" aria-selected="false" tabindex="-1">Attendance</button>
     <button role="tab" id="tab-speed" aria-controls="panel-speed" aria-selected="false" tabindex="-1">Speed performance</button>
+    <button role="tab" id="tab-pip" aria-controls="panel-pip" aria-selected="false" tabindex="-1">PIP<span class="badge">Not ready</span></button>
   </div>
 
   <!-- QA PERFORMANCE -->
@@ -569,6 +570,16 @@
     </details>
   </section>
 
+  <!-- PIP (NOT READY) -->
+  <section role="tabpanel" id="panel-pip" aria-labelledby="tab-pip" tabindex="0" hidden>
+    <div class="not-ready">
+      <p><strong>When ready, this section will show</strong> Performance Improvement Plan (PIP) tracking for Team Raine — which agents are on a PIP, why, what the plan and milestones are, and current status.</p>
+      <p><strong>What exists vs. what doesn't:</strong> just the tab and navigation wiring. No PIP criteria, data, or agents have been added yet.</p>
+      <p><strong>Blocked on:</strong> Lorraineramos to share PIP context — criteria for placing someone on a PIP, what to track per agent, and the current PIP roster (if any). Owner: Lorraineramos.</p>
+      <p class="stamp">Tab added <time datetime="2026-09-22">2026-09-22</time>. Re-check once Lorraineramos shares PIP details.</p>
+    </div>
+  </section>
+
   <footer>
     <h2>How this page was made</h2>
     <p>Skills used:</p>
@@ -586,7 +597,7 @@
       <li>Slack channel #team_raine_attendance-and-compliance_tracker (C0BAF9DF135) — read via the Slack connector on 2026-09-17; daily check-in thread not yet active as of this snapshot</li>
       <li>Google Sheet "Team Raine - QA and Daily Speed Metrics", <em>Sept 2026</em> tab, GOAL + SPEED RATING columns — read via the Google Drive connector on 2026-09-18; full 24-agent roster confirmed by Lorraineramos via screenshot after the connector's own read initially returned only 15 rows</li>
     </ul>
-    <p>A copy of this page is also hosted at <code>raine2798.github.io/Team-Raine-Performance</code> (a GitHub Pages deploy of the same source data) — the two are separate copies and will drift if only one is updated. Written 2026-09-17.</p>
+    <p>A copy of this page is also hosted at <code>raine2798.github.io/Team-Raine-Performance</code> (a GitHub Pages deploy of the same source data) — the two are separate copies and will drift if only one is updated. Written 2026-09-17. PIP tab added 2026-09-22 (not ready — awaiting context from Lorraineramos).</p>
   </footer>
 </div>
 
