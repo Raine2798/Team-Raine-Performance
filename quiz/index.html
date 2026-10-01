@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Updates Calibration Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one centered quiz card (start → question → results), owner-only results board below. Single light pastel look matching the CP Gen Support Hub. */
+  :root{
+    color-scheme: light;
+    --bg:#ffeaf3; --surface:#ffffff; --surface-2:#ffd6e8; --border:#f7a8ce;
+    --text:#2b1830; --muted:#8a6b8a; --accent:#ec4899; --accent-strong:#be185d;
+    --good:#1a9a62; --good-bg:#e3f7ec; --bad:#c43d63; --bad-bg:#fce4ea; --warn:#b5650a; --warn-bg:#fdecd3;
+    --focus:#7c3aed;
+    --font:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.5; padding:0 16px; padding-block:28px 56px; }
+  .wrap{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:20px; }
+  header .eyebrow{ font-size:0.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-strong); font-weight:700; }
+  h1{ margin:2px 0 4px; font-size:clamp(1.6rem,4vw,2.1rem); font-weight:800; letter-spacing:-.02em; text-wrap:balance; }
+  .lede{ margin:0; color:var(--muted); font-size:0.92rem; max-width:62ch; }
+  .card{ background:var(--surface); border:2px solid var(--border); border-radius:18px; padding:24px; box-shadow:3px -3px 0 0 #d8b3c2; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 18px; }
+  .chip{ font-size:0.76rem; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--surface-2); color:var(--accent-strong); }
+  .form{ display:grid; grid-template-columns:minmax(0,1fr) 180px; gap:12px; }
+  @media (max-width:560px){ .form{ grid-template-columns:1fr; } }
+  label.f{ display:flex; flex-direction:column; gap:4px; font-size:0.7rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); font-weight:600; }
+  input, select{ appearance:none; border:2px solid var(--border); background:var(--bg); color:var(--text); font:inherit; font-size:0.95rem; padding:9px 11px; border-radius:10px; text-transform:none; letter-spacing:0; }
+  input:focus-visible, select:focus-visible, button:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  .btn{ appearance:none; border:none; background:var(--accent); color:#fff; font:inherit; font-weight:700; font-size:0.95rem; padding:11px 22px; border-radius:10px; cursor:pointer; }
+  .btn:hover{ background:var(--accent-strong); }
+  .btn:disabled{ background:var(--surface-2); color:var(--muted); cursor:not-allowed; }
+  .btn.ghost{ background:var(--surface); color:var(--text); border:2px solid var(--border); }
+  .btn.ghost:hover{ background:var(--surface-2); }
+  .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .row .grow{ flex:1 1 auto; }
+  .msg{ font-size:0.84rem; color:var(--bad); }
+  .rules{ margin:14px 0 0; padding-left:18px; color:var(--muted); font-size:0.86rem; }
+
+  /* question view */
+  .qhead{ display:flex; align-items:center; gap:14px; }
+  .qnum{ font-size:0.8rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .tag{ font-size:0.72rem; font-weight:800; letter-spacing:.03em; padding:3px 9px; border-radius:999px; background:var(--surface-2); color:var(--accent-strong); }
+  .timer{ margin-left:auto; position:relative; width:58px; height:58px; flex:none; }
+  .timer svg{ width:58px; height:58px; transform:rotate(-90deg); }
+  .timer circle{ fill:none; stroke-width:6; }
+  .timer .track{ stroke:var(--surface-2); }
+  .timer .arc{ stroke:var(--accent); stroke-linecap:round; transition:stroke-dashoffset 1s linear, stroke .2s; }
+  .timer.low .arc{ stroke:var(--bad); }
+  .timer span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.05rem; font-variant-numeric:tabular-nums; }
+  .timer.low span{ color:var(--bad); }
+  .progress{ height:6px; background:var(--surface-2); border-radius:999px; overflow:hidden; margin:14px 0 18px; }
+  .progress > span{ display:block; height:100%; background:var(--accent); transition:width .3s; }
+  .scenario{ background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:0.9rem; margin-bottom:12px; }
+  .scenario .who{ font-size:0.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:700; display:block; margin-bottom:2px; }
+  .question{ font-size:1.12rem; font-weight:700; margin:0 0 14px; text-wrap:balance; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ appearance:none; text-align:left; font:inherit; font-size:0.95rem; color:var(--text); background:var(--surface); border:2px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; display:flex; gap:12px; align-items:flex-start; }
+  .opt:hover:not(:disabled){ border-color:var(--accent); background:#fff6fa; }
+  .opt .key{ flex:none; width:26px; height:26px; border-radius:8px; background:var(--surface-2); color:var(--accent-strong); font-weight:800; font-size:0.82rem; display:flex; align-items:center; justify-content:center; }
+  .opt:disabled{ cursor:default; }
+  .opt.right{ border-color:var(--good); background:var(--good-bg); }
+  .opt.right .key{ background:var(--good); color:#fff; }
+  .opt.wrong{ border-color:var(--bad); background:var(--bad-bg); }
+  .opt.wrong .key{ background:var(--bad); color:#fff; }
+  .feedback{ margin-top:14px; border-radius:12px; padding:12px 14px; font-size:0.9rem; }
+  .feedback.ok{ background:var(--good-bg); color:#13623f; }
+  .feedback.no{ background:var(--bad-bg); color:#8e2142; }
+  .feedback.late{ background:var(--warn-bg); color:#7a4708; }
+  .feedback strong{ display:block; margin-bottom:2px; }
+
+  /* results */
+  .score{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .score .big{ font-size:3rem; font-weight:800; color:var(--accent-strong); line-height:1; font-variant-numeric:tabular-nums; }
+  .score .of{ color:var(--muted); font-weight:600; }
+  .verdict{ font-size:0.8rem; font-weight:800; padding:4px 11px; border-radius:999px; }
+  .verdict.pass{ background:var(--good-bg); color:var(--good); }
+  .verdict.fail{ background:var(--bad-bg); color:var(--bad); }
+  .review{ list-style:none; margin:18px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .review li{ display:grid; grid-template-columns:22px minmax(0,1fr); gap:10px; font-size:0.86rem; padding:10px 12px; border-radius:10px; background:var(--bg); }
+  .review .mark{ font-weight:800; }
+  .review .mark.y{ color:var(--good); } .review .mark.n{ color:var(--bad); }
+  .review .exp{ color:var(--muted); display:block; margin-top:2px; }
+  .save-note{ font-size:0.84rem; color:var(--muted); margin-top:12px; }
+  .copy-box{ margin-top:14px; }
+  .copy-help{ margin:0 0 6px; font-size:0.86rem; font-weight:600; }
+  #copy-text{ width:100%; appearance:none; border:2px solid var(--border); background:var(--bg); color:var(--text); font:inherit; font-size:0.84rem; padding:9px 11px; border-radius:10px; resize:none; }
+  .save-note.ok{ color:var(--good); } .save-note.err{ color:var(--bad); }
+
+  /* owner board */
+  .board h2{ margin:0 0 2px; font-size:1.05rem; }
+  .board .sub{ margin:0 0 14px; color:var(--muted); font-size:0.84rem; }
+  .stats{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  .stat{ flex:1 1 140px; border:2px solid var(--border); border-radius:12px; padding:10px 12px; }
+  .stat .l{ font-size:0.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; }
+  .stat .v{ font-size:1.3rem; font-weight:800; font-variant-numeric:tabular-nums; }
+  .tbl{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; font-size:0.86rem; }
+  th{ text-align:left; font-size:0.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--surface-2); padding:8px 10px; }
+  td{ padding:9px 10px; border-top:1px solid var(--border); font-variant-numeric:tabular-nums; }
+  .pill{ font-size:0.72rem; font-weight:800; padding:2px 8px; border-radius:999px; }
+  .pill.pass{ background:var(--good-bg); color:var(--good); } .pill.fail{ background:var(--bad-bg); color:var(--bad); }
+  .empty{ border:2px dashed var(--border); border-radius:12px; padding:18px; text-align:center; color:var(--muted); font-size:0.88rem; }
+  .miss{ display:flex; flex-direction:column; gap:6px; margin-top:16px; }
+  .miss-row{ display:grid; grid-template-columns:minmax(0,1fr) 120px 42px; gap:10px; align-items:center; font-size:0.82rem; }
+  .bar{ height:8px; border-radius:999px; background:var(--surface-2); overflow:hidden; } .bar > span{ display:block; height:100%; background:var(--bad); }
+  @media (prefers-reduced-motion: reduce){ .timer .arc, .progress > span{ transition:none; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">CP Gen · Calibration check</div>
+    <h1>Live Updates Calibration Quiz</h1>
+    <p class="lede">10 quick questions on the four updates that went live this cascade: lockout wait time, lockout pay, manual comms reminders, and comms length &amp; channel.</p>
+  </header>
+
+  <section class="card" id="view-start">
+    <div class="chips"><span class="chip">LOWTM15</span><span class="chip">LOPAYRV</span><span class="chip">CPCOMMR</span><span class="chip">CMSLNGCHN</span></div>
+    <form class="form" id="start-form" novalidate>
+      <label class="f">Your username<input id="agent-name" type="text" maxlength="60" placeholder="e.g. marilyncarrasco" autocomplete="off"></label>
+      <label class="f">Team<select id="agent-team">
+        <option value="">Choose…</option>
+        <option value="raine">Team Raine</option><option value="allen">Team Allen</option>
+        <option value="jas">Team Jas</option><option value="phin">Team Phin</option>
+      </select></label>
+    </form>
+    <ul class="rules">
+      <li><strong>30 seconds</strong> per question. When time runs out, it counts as wrong and moves on.</li>
+      <li>You'll see the right answer and why after each question.</li>
+      <li>Passing score is <strong>8 / 10</strong>.</li>
+    </ul>
+    <div class="row"><span class="msg grow" id="start-msg"></span><button class="btn" id="start-btn" type="button">Start quiz</button></div>
+  </section>
+
+  <section class="card" id="view-q" hidden>
+    <div class="qhead">
+      <span class="qnum" id="q-num">Question 1 of 10</span><span class="tag" id="q-tag">LOWTM15</span>
+      <div class="timer" id="timer" aria-live="off"><svg viewBox="0 0 58 58" aria-hidden="true"><circle class="track" cx="29" cy="29" r="25"></circle><circle class="arc" id="timer-arc" cx="29" cy="29" r="25"></circle></svg><span id="timer-text">30</span></div>
+    </div>
+    <div class="progress"><span id="q-progress" style="width:0%"></span></div>
+    <div id="q-scenario"></div>
+    <p class="question" id="q-text"></p>
+    <div class="options" id="q-options"></div>
+    <div id="q-feedback" aria-live="polite"></div>
+    <div class="row"><span class="grow"></span><button class="btn" id="next-btn" type="button" hidden>Next question</button></div>
+  </section>
+
+  <section class="card" id="view-result" hidden>
+    <div class="score"><span class="big" id="r-score">0</span><span class="of" id="r-of">/ 10</span><span class="verdict" id="r-verdict"></span></div>
+    <p class="lede" id="r-time" style="margin-top:6px;"></p>
+    <ul class="review" id="r-review"></ul>
+    <p class="save-note" id="r-save"></p>
+    <div class="copy-box" id="copy-box" hidden>
+      <p class="copy-help">Copy your result and paste it in your TL's Slack thread so it gets recorded.</p>
+      <textarea id="copy-text" readonly rows="4" aria-label="Your result summary"></textarea>
+    </div>
+    <div class="row"><span class="grow"></span><button class="btn ghost" id="retry-btn" type="button">Take it again</button><button class="btn" id="copy-btn" type="button" hidden>Copy my result</button></div>
+  </section>
+
+</div>
+
+<script>
+  // Paste the Google Apps Script web app URL here (see quiz/README.md). Leave empty to only show "Copy my result".
+  const RESULTS_URL = "";
+  const SECONDS = 30, PASS = 8;
+  const TEAMS = { raine: "Team Raine", allen: "Team Allen", jas: "Team Jas", phin: "Team Phin" };
+  const QUESTIONS = [
+    { tag: "LOWTM15", q: "A CP reports a lockout through the App. How long must they have waited from the scheduled start?",
+      opts: ["10 minutes", "15 minutes", "30 minutes", "45 minutes"], a: 1,
+      why: "Both the App and the Dashboard now use the same rule: a 15-minute wait." },
+    { tag: "LOWTM15", q: "How many contact attempts does the CP need before it counts as a lockout?",
+      opts: ["1 call is enough", "2 attempts, any time", "2 attempts, at least 5 minutes apart", "3 attempts, at least 10 minutes apart"], a: 2,
+      why: "2 contact attempts, at least 5 minutes apart. The old 30 min / 3 attempts Dashboard rule is gone." },
+    { tag: "LOWTM15", scenario: "CP reported through the Dashboard: waited 15 minutes and called the customer twice, 6 minutes apart.",
+      q: "Does this meet the lockout requirement?",
+      opts: ["Yes, it meets the rule", "No, Dashboard reports need 30 minutes", "No, Dashboard reports need 3 attempts", "Only if the customer confirms"], a: 0,
+      why: "The rule is the same for both channels now: 15 minutes + 2 attempts, 5+ minutes apart." },
+    { tag: "LOWTM15", q: "How do you confirm the CP actually waited and made both attempts?",
+      opts: ["Take the CP's word for it", "Check the call/message timestamps", "Ask the customer", "Check the CP's rating"], a: 1,
+      why: "Verify the wait and both attempts from the call/message timestamps before treating it as a lockout." },
+    { tag: "LOPAYRV", scenario: "“No one answered the door. I drove 40 minutes for nothing and wasted my gas.”",
+      q: "What kind of MCP request is this?",
+      opts: ["Explicit request", "Implied request", "Not a request", "A complaint, so escalate it"], a: 1,
+      why: "The CP didn't ask for pay, but shared frustration about lost time and money. That counts as an implied request." },
+    { tag: "LOPAYRV", scenario: "“Can I get lockout pay for this job? Customer never showed.”",
+      q: "What kind of MCP request is this?",
+      opts: ["Explicit request", "Implied request", "Not a request", "Only a request if they mention gas"], a: 0,
+      why: "The CP directly asked to be paid. That's an explicit request." },
+    { tag: "LOPAYRV", scenario: "CP arrived 40 minutes late. The customer had already cancelled before the CP got there.",
+      q: "Does the 30-minute lateness rule apply here?",
+      opts: ["Yes, the CP was more than 30 minutes late", "No, this is the exception to the rule", "Only on the Dashboard", "Only if the CP asks for pay"], a: 1,
+      why: "Exception: if the customer had already cancelled before the CP arrived, the lateness rule doesn't apply." },
+    { tag: "CPCOMMR", scenario: "CP writes in asking when this week's payout will land.",
+      q: "Should you add reminders about overlapping jobs, cleaning supplies and profile photo?",
+      opts: ["Yes, always add all three", "Only the profile photo", "No, only mention them when related to the concern", "Only if the CP is new"], a: 2,
+      why: "Automated comms already cover these. Only bring them up when they're part of why the CP reached out." },
+    { tag: "CMSLNGCHN", scenario: "CP sent their concern by email.",
+      q: "Which channel should you reply in?",
+      opts: ["SMS, it's faster", "Chat", "Email", "Whichever you prefer"], a: 2,
+      why: "Reply in the channel they used. They email, we email. That's where they'll see the answer." },
+    { tag: "CMSLNGCHN", q: "Which reply is better?",
+      opts: ["A one-sentence reply that gets them asking again", "A four-sentence reply that fully resolves it", "The shortest reply possible, every time", "A reply that links the help center only"], a: 1,
+      why: "There's no length limit on any channel. A four-sentence reply that resolves it beats a one-sentence reply that gets them asking again." },
+  ];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fmtSecs = s => s >= 60 ? `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, "0")}s` : `${s}s`;
+  const views = ["view-start", "view-q", "view-result"];
+  const show = id => views.forEach(v => { $(v).hidden = v !== id; });
+
+  let state = null, tick = null;
+  const CIRC = 2 * Math.PI * 25;
+  $("timer-arc").style.strokeDasharray = CIRC;
+
+  try { const n = localStorage.getItem("quiz-name"), t = localStorage.getItem("quiz-team"); if (n) $("agent-name").value = n; if (t) $("agent-team").value = t; } catch (e) {}
+
+  $("start-btn").addEventListener("click", () => {
+    const name = $("agent-name").value.trim(), team = $("agent-team").value;
+    if (!name) { $("start-msg").textContent = "Enter your username first."; return; }
+    if (!team) { $("start-msg").textContent = "Choose your team."; return; }
+    $("start-msg").textContent = "";
+    try { localStorage.setItem("quiz-name", name); localStorage.setItem("quiz-team", team); } catch (e) {}
+    state = { name, team, i: 0, answers: [], startedAt: Date.now() };
+    show("view-q"); renderQ();
+  });
+
+  function renderQ(){
+    const q = QUESTIONS[state.i];
+    $("q-num").textContent = `Question ${state.i + 1} of ${QUESTIONS.length}`;
+    $("q-tag").textContent = q.tag;
+    $("q-progress").style.width = (state.i / QUESTIONS.length * 100) + "%";
+    $("q-scenario").innerHTML = q.scenario ? `<div class="scenario"><span class="who">Scenario</span>${esc(q.scenario)}</div>` : "";
+    $("q-text").textContent = q.q;
+    $("q-feedback").innerHTML = "";
+    $("next-btn").hidden = true;
+    $("q-options").innerHTML = q.opts.map((o, k) => `<button type="button" class="opt" data-k="${k}"><span class="key">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("");
+    $("q-options").querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => answer(+b.dataset.k)));
+    startTimer();
+  }
+  function startTimer(){
+    clearInterval(tick);
+    let left = SECONDS; state.qStart = Date.now();
+    const draw = () => { $("timer-text").textContent = left; $("timer-arc").style.strokeDashoffset = CIRC * (1 - left / SECONDS); $("timer").classList.toggle("low", left <= 5); };
+    draw();
+    tick = setInterval(() => { left--; draw(); if (left <= 0) { clearInterval(tick); answer(null); } }, 1000);
+  }
+  function answer(k){
+    clearInterval(tick);
+    const q = QUESTIONS[state.i], correct = k === q.a;
+    state.answers.push({ q: state.i, picked: k, correct, secs: Math.min(SECONDS, Math.round((Date.now() - state.qStart) / 1000)) });
+    $("q-options").querySelectorAll(".opt").forEach(b => {
+      const bk = +b.dataset.k; b.disabled = true;
+      if (bk === q.a) b.classList.add("right"); else if (bk === k) b.classList.add("wrong");
+    });
+    const cls = k === null ? "late" : correct ? "ok" : "no";
+    const head = k === null ? "Time's up." : correct ? "Correct." : "Not quite.";
+    $("q-feedback").innerHTML = `<div class="feedback ${cls}"><strong>${head}</strong>${esc(q.why)}</div>`;
+    const last = state.i === QUESTIONS.length - 1;
+    $("next-btn").textContent = last ? "See my score" : "Next question";
+    $("next-btn").hidden = false; $("next-btn").focus();
+  }
+  $("next-btn").addEventListener("click", () => {
+    if (state.i < QUESTIONS.length - 1) { state.i++; renderQ(); } else finish();
+  });
+
+  async function finish(){
+    const score = state.answers.filter(a => a.correct).length, secs = Math.round((Date.now() - state.startedAt) / 1000);
+    show("view-result");
+    $("r-score").textContent = score; $("r-of").textContent = "/ " + QUESTIONS.length;
+    const pass = score >= PASS;
+    $("r-verdict").textContent = pass ? "Passed" : "Needs a refresher"; $("r-verdict").className = "verdict " + (pass ? "pass" : "fail");
+    $("r-time").textContent = `${esc(state.name)} · ${TEAMS[state.team]} · finished in ${fmtSecs(secs)}`;
+    $("r-review").innerHTML = state.answers.map(a => {
+      const q = QUESTIONS[a.q];
+      return `<li><span class="mark ${a.correct ? "y" : "n"}">${a.correct ? "✓" : "✗"}</span><span><strong>${esc(q.tag)}</strong> · ${esc(q.q)}<span class="exp">${a.picked === null ? "Ran out of time. " : a.correct ? "" : "You picked: " + esc(q.opts[a.picked]) + ". "}Answer: ${esc(q.opts[q.a])}</span></span></li>`;
+    }).join("");
+    const note = $("r-save");
+    const missed = state.answers.filter(a => !a.correct).map(a => "Q" + (a.q + 1) + " " + QUESTIONS[a.q].tag);
+    $("copy-text").value = `Live Updates Quiz: ${state.name} (${TEAMS[state.team]}) scored ${score}/${QUESTIONS.length} - ${pass ? "Passed" : "Needs a refresher"} - ${fmtSecs(secs)} - ${new Date().toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}` + (missed.length ? `\nMissed: ${missed.join(", ")}` : "");
+    $("copy-box").hidden = false; $("copy-btn").hidden = false;
+    if (!RESULTS_URL) { note.textContent = ""; return; }
+    note.className = "save-note"; note.textContent = "Saving your result…";
+    const payload = { agent: state.name, team: TEAMS[state.team], score, total: QUESTIONS.length, passed: pass ? "Passed" : "Needs a refresher", secs,
+      missed: missed.join(", "), answers: state.answers.map(a => (a.correct ? "✓" : "✗") + "Q" + (a.q + 1)).join(" "), submittedAt: new Date().toISOString() };
+    try {
+      // text/plain + no-cors avoids a CORS preflight that Apps Script can't answer; the response can't be read, so a sent request counts as saved.
+      await fetch(RESULTS_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+      note.className = "save-note ok"; note.textContent = "Result sent to your TL. You can also copy it below as a backup.";
+    } catch (e) {
+      note.className = "save-note err"; note.textContent = "Your result couldn't be sent. Copy it below and paste it in your TL's Slack thread.";
+    }
+  }
+  $("retry-btn").addEventListener("click", () => show("view-start"));
+  $("copy-btn").addEventListener("click", async () => {
+    const t = $("copy-text"), b = $("copy-btn");
+    try { await navigator.clipboard.writeText(t.value); b.textContent = "Copied"; }
+    catch (e) { t.focus(); t.select(); try { document.execCommand("copy"); b.textContent = "Copied"; } catch (e2) { b.textContent = "Press Ctrl+C to copy"; } }
+    setTimeout(() => { b.textContent = "Copy my result"; }, 2500);
+  });
+
+</script>
+
+</body>
+</html>
